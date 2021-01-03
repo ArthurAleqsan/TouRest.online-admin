@@ -64,6 +64,7 @@
     "@types/i18next-browser-languagedetector": "^3.0.0",
     "@types/i18next-xhr-backend": "^1.4.2",
     "@types/react-i18next": "^8.1.0",
+    "antd": "^4.9.4",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.5",
     "i": "^0.3.6",

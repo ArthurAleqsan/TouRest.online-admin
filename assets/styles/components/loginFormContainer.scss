@@ -1,0 +1,30 @@
+.login-form-container {
+    width: 40%;
+    max-width: 745px;
+    min-width: 500px;
+    margin: 0 auto;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background: #fff;
+    .login-header {
+      text-align: center;
+      border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 0;
+      background-color: rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      font-size: 17px;
+    }
+    .login-form {
+      padding: 35px 0 10px;
+    }
+  }
+  @media only screen and (max-width: 590px) {
+      .login-form-container {
+          min-width: unset;
+          width: 60%;
+          .login-form {
+              padding: 35px 10px 10px;
+          }
+      }
+  }

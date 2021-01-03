@@ -1,5 +1,5 @@
 export default class ServerConnector {
-    constructor(path, api = '/api/') {
+    constructor(path, api = '/v1') {
         this.path = api + path;
     }
     
@@ -48,6 +48,7 @@ export default class ServerConnector {
         const headersObj = Object.assign({
             'content-type': 'application/json',
             'Cache-Control': 'no-cache',
+            "authorization": `Bearer ${localStorage.getItem('token')}`,
         }, req.headers);
 
         const headers = new Headers(headersObj);
