@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 const MainRouter = () => {
-    const {user} = useSelector(s => s.user, shallowEqual);
+    const { user } = useSelector(s => s.user, shallowEqual);
     const PUBLIC_PATH = '/login';
 
     return (

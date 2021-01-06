@@ -26,7 +26,13 @@ app.use(
         changeOrigin: true
     })
 );
-
+app.use(
+    '/v1/tours',
+    createProxyMiddleware({
+        target: API_URL,
+        changeOrigin: true
+    })
+);
 app.use(async (req, res, next) => {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });

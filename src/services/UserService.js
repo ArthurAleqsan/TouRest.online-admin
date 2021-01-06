@@ -6,13 +6,22 @@ class UsersService extends Request {
         super('/users');
     }
 
+    createUser(data) {
+        const options = {
+            method: 'POST',
+        };
+        return this.send({
+            path: '/current', options,
+        }).then(({ json, status }) => ({ json, status }));
+    }
+
     getCurrentUser() {
         const options = {
             method: 'GET',
         };
         return this.send({
             path: '/current', options,
-        }).then(({ json, status }) => ({json, status}));
+        }).then(({ json, status }) => ({ json, status }));
     }
 }
 

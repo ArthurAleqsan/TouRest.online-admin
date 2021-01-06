@@ -2,12 +2,12 @@ export default class ServerConnector {
     constructor(path, api = '/v1') {
         this.path = api + path;
     }
-    
+
     isOkStatus(status) {
         return [200, 201, 204].includes(status);
     }
-    
-    static makeQuery(obj){
+
+    static makeQuery(obj) {
         let query = '';
         Object.keys(obj).forEach((key, i) => {
             query += `&${key}=${obj[key]}`
@@ -16,7 +16,7 @@ export default class ServerConnector {
     }
 
     static _handleErrors(res) {
-        if(res.status !== 401) return res;
+        if (res.status !== 401) return res;
         //logout
     }
 
@@ -26,15 +26,15 @@ export default class ServerConnector {
             return res;
         })
     }
-    
+
     static _makeRequest(req, path, errHandler) {
         return ServerConnector.fetcher(req, path, errHandler)
             .then((res) => ServerConnector._handleErrors(res))
             .then((res) => {
-                    return res.json().then(json => {
-                        return { status: res.status, json };
-                    });
-                }
+                return res.json().then(json => {
+                    return { status: res.status, json };
+                });
+            }
             )
             .catch(error => {
                 if (errHandler) {
@@ -62,4 +62,10 @@ export default class ServerConnector {
         const request = new Request(path, options);
         return fetch(request)
     }
+    // create(path, data) {
+    //     `${this.path}${req.path}`;
+    //     return ServerConnector._makeRequest(req, `${this.path}${path}`, errHandler).then((res) => {
+    //         return res;
+    //     })
+    // }
 }
