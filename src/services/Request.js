@@ -55,6 +55,7 @@ export default class ServerConnector {
 
         const options = Object.assign({
             method: 'POST',
+            rejectUnauthorized: false,
             //credentials: 'same-origin',
         }, req.options);
 
@@ -62,10 +63,4 @@ export default class ServerConnector {
         const request = new Request(path, options);
         return fetch(request)
     }
-    // create(path, data) {
-    //     `${this.path}${req.path}`;
-    //     return ServerConnector._makeRequest(req, `${this.path}${path}`, errHandler).then((res) => {
-    //         return res;
-    //     })
-    // }
 }
