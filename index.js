@@ -37,6 +37,30 @@ app.use(
     })
 );
 app.use(
+    '/v1/categories',
+    createProxyMiddleware({
+        target: API_URL,
+        changeOrigin: true,
+        secure,
+    })
+);
+app.use(
+    '/v1/blogs',
+    createProxyMiddleware({
+        target: API_URL,
+        changeOrigin: true,
+        secure,
+    })
+);
+app.use(
+    '/v1/media',
+    createProxyMiddleware({
+        target: API_URL,
+        changeOrigin: true,
+        secure,
+    })
+);
+app.use(
     '/v1/tours',
     createProxyMiddleware({
         target: API_URL,

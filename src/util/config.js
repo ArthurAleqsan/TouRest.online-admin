@@ -1,4 +1,5 @@
 export const CONFIG = {
+    IMAGE_UPLOAD_URL: 'http://localhost:3000/v1/media/upload',
     tour_schema : {
         en_name: '',
         ru_name: '',
@@ -24,6 +25,12 @@ export const CONFIG = {
         managerId: '',
         en_fullDescription: '',
         ru_fullDescription: '',
+    },
+    category_schema: {
+        en_name: '',
+        ru_name: '',
+        url: '',
+        city: '',
     },
     cities : ['Sharm El Sheikh', 'Hurgada'],
 };
