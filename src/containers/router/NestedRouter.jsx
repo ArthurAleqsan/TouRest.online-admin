@@ -16,6 +16,8 @@ const NestedRouter = () => {
             <Route exact path='/tours/create' component={CreateTour} />
             <Route exact path='/categories/create' component={CreateCategory} />
 
+            <Route exact path='/categories/edit/id=:id' component={CreateCategory} />
+
             <Route exact path='/tours' component={Tours} />
             <Route exact path='/categories' component={Categories} />
             <Route path='/orders' component={Orders} />

@@ -10,6 +10,9 @@ const CategoriesTable = () => {
     const handleRedirect = () => {
         history.push('/categories/create');
     }
+    const handleRedirectToEdit = (id) => {
+        history.push(`/categories/edit/id=${id}`);
+    }
     return (
         <>
             <Divider orientation="left">Categories</Divider>
@@ -56,7 +59,7 @@ const CategoriesTable = () => {
                     </Col>
                     <Col className="gutter-row" >
                         <div>
-                            <span>edit</span>
+                            <span onClick = {() => handleRedirectToEdit(category.id)}>edit</span>
                             <span>remove</span>
                         </div>
                     </Col>
