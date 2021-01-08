@@ -29,3 +29,32 @@ export const getUser = (dispatch) => {
             }
         })
 }
+export const getUsers = (dispatch) => {
+    UserService.getUsers()
+        .then(res => {
+            const { status, json: users } = res;
+            if (UserService.isOkStatus(status)) {
+                dispatch({
+                    type: types.SET_USERS,
+                    users
+                })
+            } else {
+                message.error(users.message);
+            }
+        })
+}
+export const createUser = (dispatch, getState, data) => {
+    UserService.createUser(data)
+        .then(res => {
+            const { status, json: user } = res;
+            if (UserService.isOkStatus(status)) {
+                const { users } = getState().user;
+                dispatch({
+                    type: types.SET_USERS,
+                    users: [...users, user]
+                })
+            } else {
+                message.error(user.message);
+            }
+        })
+}

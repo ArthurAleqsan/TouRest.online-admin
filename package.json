@@ -1,7 +1,7 @@
 {
-  "name": "basic-structure",
+  "name": "tourest.online-admin",
   "version": "1.0.0",
-  "description": "basic-structure",
+  "description": "tourest.online-admin",
   "main": "./src/index.jsx",
   "scripts": {
     "start": "node index.js",

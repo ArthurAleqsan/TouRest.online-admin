@@ -9,20 +9,22 @@ import Tours from '../pages/content/Tours';
 import Users from '../pages/content/Users';
 import CreateCategory from '../pages/new-content/CreateCategory';
 import CreateTour from '../pages/new-content/CreateTour';
+import CreateUser from '../pages/new-content/CreateUser';
 
 const NestedRouter = () => {
     return (
         <>
             <Route exact path='/tours/create' component={CreateTour} />
             <Route exact path='/categories/create' component={CreateCategory} />
+            <Route exact path='/users/create' component={CreateUser} />
 
             <Route exact path='/categories/edit/id=:id' component={CreateCategory} />
 
             <Route exact path='/tours' component={Tours} />
             <Route exact path='/categories' component={Categories} />
-            <Route path='/orders' component={Orders} />
-            <Route path='/users' component={Users} />
-            <Route path='/blog' component={Blog} />
+            <Route exact path='/orders' component={Orders} />
+            <Route exact path='/users' component={Users} />
+            <Route exact path='/blog' component={Blog} />
             <Route path='/' component={Stats} />
         </>
     )

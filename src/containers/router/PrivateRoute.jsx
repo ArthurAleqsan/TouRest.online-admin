@@ -6,8 +6,6 @@ import { Route, Redirect } from 'react-router-dom';
 const PrivateRoute = ({ component: RouteComponent, location, ...rest }) => {
     const { user } = useSelector(s => s.user, shallowEqual);
     const expireDate = localStorage.getItem('accessTokenExpiresAt');
-    // To do 
-    // check expire date
     const now = new Date().getTime();
     let isTokenExpired;
     if (expireDate) {
@@ -18,7 +16,7 @@ const PrivateRoute = ({ component: RouteComponent, location, ...rest }) => {
     }
     const hasToken = !!localStorage.getItem('token');
     let Component;
-    if (user) {
+    if (user && isTokenExpired) {
         console.log(user);
         Component = props => (<RouteComponent {...props} />);
     } else {

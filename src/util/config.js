@@ -33,4 +33,5 @@ export const CONFIG = {
         city: '',
     },
     cities : ['Sharm El Sheikh', 'Hurgada'],
+    roles : ['manager', 'member'],
 };
