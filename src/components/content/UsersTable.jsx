@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import Table from './Table';
 
 const UsersTable = () => {
     const { users } = useSelector(s => s.user);
@@ -20,8 +21,11 @@ const UsersTable = () => {
                     <div>Do not have Users</div>
                 </Col>
             </Row> : <Row key={0}>
-                    <Col className="gutter-row" span={10}>
-                        <div>Name</div>
+                    <Col className="gutter-row" span={5}>
+                        <div>First Name</div>
+                    </Col>
+                    <Col className="gutter-row" span={5}>
+                        <div>Last Name</div>
                     </Col>
                     <Col className="gutter-row" span={5}>
                         <div>Email</div>
@@ -31,6 +35,30 @@ const UsersTable = () => {
                     </Col>
                     <Col className="gutter-row" />
                 </Row>}
+            {users ? users.map(user => {
+                return <Row key={user.id}>
+                    <Table
+                        data={user}
+                        cols={[{
+                            key: 'firstName',
+                            sp: 5
+                        },
+                        {
+                            key: 'lastName',
+                            sp: 5
+                        },
+                        {
+                            key: 'email',
+                            sp: 5
+                        },
+                        {
+                            key: 'role',
+                            sp: 5
+                        }]}
+                        path = 'users'
+                    />
+                </Row>
+            }) : <Spin />}
             <Divider />
             <Button type='primary' onClick={handleRedirect}>Create User</Button>
         </>

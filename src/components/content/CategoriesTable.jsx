@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import Table from './Table';
 
 
 const CategoriesTable = () => {
@@ -37,32 +38,26 @@ const CategoriesTable = () => {
                 </Row>}
             {categories ? categories.map(category => {
                 return <Row key={category.id}>
-                    <Col className="gutter-row" span={5}>
-                        <div>
-                            <img src={category.url} />
-                        </div>
-                    </Col>
-                    <Col className="gutter-row" span={5}>
-                        <div>
-                            <span>{category.city}</span>
-                        </div>
-                    </Col>
-                    <Col className="gutter-row" span={5}>
-                        <div>
-                            <span>{category.en_name}</span>
-                        </div>
-                    </Col>
-                    <Col className="gutter-row" span={5}>
-                        <div>
-                            <span>{category.ru_name}</span>
-                        </div>
-                    </Col>
-                    <Col className="gutter-row" >
-                        <div>
-                            <span onClick = {() => handleRedirectToEdit(category.id)}>edit</span>
-                            <span>remove</span>
-                        </div>
-                    </Col>
+                    <Table 
+                        data = {category}
+                        cols = {[{
+                            key: 'url',
+                            sp: 5
+                        },
+                        {
+                            key: 'city',
+                            sp: 5
+                        },
+                        {
+                            key: 'en_name',
+                            sp: 5
+                        },
+                        {
+                            key: 'ru_name',
+                            sp: 5
+                        }]}
+                        path = 'categories'
+                    />
                 </Row>
             }) : <Spin />}
             <Divider />
