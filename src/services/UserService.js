@@ -12,7 +12,7 @@ class UsersService extends Request {
             body: JSON.stringify(data)
         };
         return this.send({
-            path: '/', options,
+            path: '/manager', options,
         }).then(({ json, status }) => ({ json, status }));
     }
     getUsers() {

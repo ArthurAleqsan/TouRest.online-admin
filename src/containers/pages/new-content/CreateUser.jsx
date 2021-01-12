@@ -22,7 +22,6 @@ const CreateUser = () => {
         lastName: '',
         password: '',
         confirmPassword: '',
-        role: '',
     });
     const handleInputGroupChange = e => {
         const { name, value } = e.target
@@ -85,7 +84,7 @@ const CreateUser = () => {
                 value={userFields.email}
                 type='email'
             />
-            <div className='input-group'>
+            {/* <div className='input-group'>
                 <span>City</span>
                 <Select
                     style={{ width: '100%' }}
@@ -94,7 +93,7 @@ const CreateUser = () => {
                 >
                     {ROLES}
                 </Select>
-            </div>
+            </div> */}
             <Button onClick={resetData} >Reset</Button>
             <Button type="primary" onClick={handleCreate} >Submit</Button>
         </div>
