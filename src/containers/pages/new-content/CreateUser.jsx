@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
-import { Button, message, Select } from 'antd';
+import { Button, message } from 'antd';
 import { useDispatch, useStore } from 'react-redux';
 
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { createUser } from '../../../store/user/user.actions';
 import { isValidObject } from '../../../util/helpers';
-import { CONFIG } from '../../../util/config';
-
-
-const { roles } = CONFIG;
-const { Option } = Select;
-
-const ROLES = roles.map(role => <Option key={role}>{role}</Option>)
 
 const CreateUser = () => {
     const dispatch = useDispatch();
@@ -26,9 +19,6 @@ const CreateUser = () => {
     const handleInputGroupChange = e => {
         const { name, value } = e.target
         setUserFields({ ...userFields, [name]: value });
-    }
-    const handleSelect = (role) => {
-        setUserFields({ ...userFields, role });
     }
     const handleCreate = () => {
         if (userFields.password !== userFields.confirmPassword) {
