@@ -5,8 +5,15 @@
     .logo {
         width: 120px;
     }
-    .logout {
-        cursor: pointer;
-        font-weight: bolder;
+    .log-out {
+        display: flex;
+        .img {
+            width: 15px;
+            margin-left: 5px;
+        }
+        .logout {
+            cursor: pointer;
+            font-weight: bolder;
+        }
     }
 }

@@ -5,7 +5,7 @@ import NestedRouter from './NestedRouter';
 
 const App = () => {
     return (
-        <div className = 'main-container'>
+        <div className='main-content'>
             <Header />
             <Navigation />
             <NestedRouter />

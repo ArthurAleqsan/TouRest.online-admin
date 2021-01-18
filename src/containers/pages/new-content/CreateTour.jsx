@@ -12,25 +12,25 @@ const CreateTour = () => {
     const [tourValues, setTourValues] = useState(tour_schema);
     const handleCreate = () => {
         console.log(tourValues);
-    }
+    };
     const resetData = () => {
         setTourValues(tour_schema);
-    }
+    };
     const handleLanguageSelect = (value) => {
         setTourValues({ ...tourValues, languages: [...tourValues.languages, value] });
-    }
+    };
     const handleSelect = (city) => {
         setTourValues({ ...tourValues, city });
-    }
+    };
     const handleInputGroupChange = e => {
         const { name, value } = e.target
         setTourValues({ ...tourValues, [name]: value });
-    }
+    };
 
     return (
-        <div>
+        <div className='create-tour'>
             <div className='input-group'>
-                <span>City</span>
+                <span className='label'>City</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select tour city"
@@ -66,7 +66,7 @@ const CreateTour = () => {
                 textArea
             />
             <div className='input-group'>
-                <span>Tour languages</span>
+                <span className='label'>Tour languages</span>
                 <Select
                     mode="multiple"
                     allowClear
@@ -77,9 +77,10 @@ const CreateTour = () => {
                     {LANGUAGES}
                 </Select>
             </div>
-
-            <Button onClick={resetData} >Reset</Button>
-            <Button type="primary" onClick={handleCreate} >Submit</Button>
+            <div className='buttons-container'>
+                <Button onClick={resetData} className='reset' >Reset</Button>
+                <Button type="primary" onClick={handleCreate} className='submit' >Submit</Button>
+            </div>
         </div>
     )
 };

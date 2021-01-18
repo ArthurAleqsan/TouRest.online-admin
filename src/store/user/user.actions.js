@@ -17,6 +17,13 @@ export const login = (dispatch, form) => {
         }
     })
 }
+export const logout = (dispatch) => {
+    localStorage.clear();
+    dispatch({
+        type: types.SET_USER,
+        user: null,
+    });
+}
 export const getUser = (dispatch) => {
     UserService.getCurrentUser()
         .then(res => {
