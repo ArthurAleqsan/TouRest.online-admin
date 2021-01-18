@@ -15,7 +15,7 @@ const InputGroup = memo(({ label, value, handleChange, name, textArea, type = 't
 });
 
 InputGroup.propTypes = {
-    label: PropType.string.isRequired,
+    label: PropType.string,
     value: PropType.string.isRequired,
     name: PropType.string.isRequired,
     type: PropType.string,

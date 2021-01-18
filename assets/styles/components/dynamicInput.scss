@@ -1,0 +1,24 @@
+.dynamic-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-end;
+    position: relative;
+    .input {
+        display: flex;
+        margin-top: 15px;
+        width: 100%;
+    }
+    input {
+        border: 1px solid hsla(0, 0%, 43.9%, 0.15);
+        width: 100%;
+    }
+    .btns {
+        cursor: pointer;
+        border: 1px solid hsla(0, 0%, 43.9%, 0.15);
+        width: 30px;
+    }
+    .add {
+        margin-top: 15px;
+    }
+}
