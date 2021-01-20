@@ -63,6 +63,7 @@ const CreateTour = () => {
         // console.log(value[1].diff(value[0]))
     }
     const onChange = (value, dateString) => {
+        
         // console.log('Selected Time: ', value);
         // console.log('Formatted Selected Time: ', dateString);
     }
@@ -175,6 +176,42 @@ const CreateTour = () => {
                 label='Highlights'
                 handleDynamicInputChange={handleDynamicInputChange}
             />
+            <DynamicInput
+                name='ru_highlights'
+                label='описание'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+            <DynamicInput
+                name='en_includes'
+                label='Includes'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+            <DynamicInput
+                name='ru_includes'
+                label='Что входит в тур'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+            <DynamicInput
+                name='en_notSuitable'
+                label='Not suitable'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+            <DynamicInput
+                name='en_notSuitable'
+                label='Что нельзя'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+            <DynamicInput
+                name='en_needed'
+                label='Needed'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+            <DynamicInput
+                name='ru_needed'
+                label='Что нужно'
+                handleDynamicInputChange={handleDynamicInputChange}
+            />
+
             <Divider />
             <Button onClick={resetData} >Reset</Button>
             <Button type="primary" onClick={handleCreate} >Submit</Button>
