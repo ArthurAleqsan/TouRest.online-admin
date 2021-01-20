@@ -4,12 +4,12 @@ import PropType from 'prop-types';
 import { Input } from 'antd';
 const { TextArea } = Input;
 
-const InputGroup = memo(({ label, value, handleChange, name, textArea, type ='text'}) => {
+const InputGroup = memo(({ label, value, handleChange, name, textArea, type = 'text' }) => {
     return (
         <div className='input-group'>
-            <span>{label}</span>
+            <span className='label'>{label}</span>
             {textArea ? <TextArea name={name} onChange={handleChange} value={value} style={{ resize: 'none' }} />
-                : <Input name={name} onChange={handleChange} value={value} type = {type} />}
+                : <Input name={name} onChange={handleChange} value={value} type={type} />}
         </div>
     )
 });

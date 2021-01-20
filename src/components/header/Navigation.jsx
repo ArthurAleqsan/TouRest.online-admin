@@ -5,22 +5,22 @@ const Navigation = () => {
     return (
         <nav className = 'navigation'>
             <Link to='/'>
-                <span>statistic</span>
+                <span>Statistic</span>
             </Link>
             <Link to='/tours'>
-                <span>tours</span>
+                <span>Tours</span>
             </Link>
             <Link to='/categories'>
-                <span>categories</span>
+                <span>Categories</span>
             </Link>
             <Link to='/blog'>
-                <span>blog</span>
+                <span>Blog</span>
             </Link>
             <Link to='/users'>
-                <span>users</span>
+                <span>Users</span>
             </Link>
             <Link to='/orders'>
-                <span>orders</span>
+                <span>Orders</span>
             </Link>
         </nav>
     )

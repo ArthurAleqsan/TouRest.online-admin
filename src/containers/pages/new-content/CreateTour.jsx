@@ -72,9 +72,9 @@ const CreateTour = () => {
     }
 
     return (
-        <div>
+        <div className='create-tour'>
             <div className='input-group'>
-                <span>City</span>
+                <span className='label'>City</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select tour city"
@@ -84,7 +84,7 @@ const CreateTour = () => {
                 </Select>
             </div>
             <div className='input-group'>
-                <span>Manager</span>
+                <span className='label'>Manager</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select manager"
@@ -94,7 +94,7 @@ const CreateTour = () => {
                 </Select>
             </div>
             <div className='input-group'>
-                <span>Category</span>
+                <span className='label'>Category</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select category"
@@ -116,20 +116,6 @@ const CreateTour = () => {
                 handleChange={handleInputGroupChange}
             />
             <InputGroup
-                label='Price For Adults'
-                value={tourValues.priceForAdults}
-                name='priceForAdults'
-                handleChange={handleInputGroupChange}
-                type='number'
-            />
-            <InputGroup
-                label='Price For Children'
-                value={tourValues.priceForChildren}
-                name='priceForChildren'
-                handleChange={handleInputGroupChange}
-                type='number'
-            />
-            <InputGroup
                 label='Full Description'
                 value={tourValues.en_fullDescription}
                 name='en_fullDescription'
@@ -144,7 +130,7 @@ const CreateTour = () => {
                 textArea
             />
             <div className='input-group'>
-                <span>Tour languages</span>
+                <span className='label'>Tour languages</span>
                 <Select
                     mode="multiple"
                     allowClear
@@ -156,7 +142,7 @@ const CreateTour = () => {
                 </Select>
             </div>
             <div className='input-group'>
-                <span>Rate</span>
+                <span className='label'>Rate</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select rate"
@@ -213,8 +199,10 @@ const CreateTour = () => {
             />
 
             <Divider />
-            <Button onClick={resetData} >Reset</Button>
-            <Button type="primary" onClick={handleCreate} >Submit</Button>
+            <div className='buttons-container'>
+                <Button onClick={resetData} className='reset' >Reset</Button>
+                <Button type="primary" onClick={handleCreate} className='submit' >Submit</Button>
+            </div>
         </div>
     )
 };

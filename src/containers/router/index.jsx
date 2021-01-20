@@ -11,7 +11,7 @@ const MainRouter = () => {
     const PUBLIC_PATH = '/login';
 
     return (
-        <div className='main-container'>
+        <div className='main-conrainer'>
             <Switch>
                 <PublicRoute user={user} path={PUBLIC_PATH} >
                     <Switch>
