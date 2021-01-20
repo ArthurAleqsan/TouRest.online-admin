@@ -26,4 +26,13 @@
             margin-right: 10px;
         }
     }
+    .date-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }

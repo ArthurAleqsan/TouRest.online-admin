@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
 import { Button, Select, DatePicker, Divider, Upload, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { CONFIG } from '../../../util/config';
 import { getUsers } from '../../../store/user/user.actions';
 import { getCategories } from '../../../store/categories/category.actions';
-import DynamicInput from '../../../components/simple-components/DinamicInput';
+import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour } from '../../../store/tours/tour.actions';
 
 
@@ -173,22 +174,24 @@ const CreateTour = () => {
                     {RATES}
                 </Select>
             </div> */}
-            <div className='input-group'>
-                <span>Duration</span>
-                <RangePicker
-                    showTime={{ format: 'HH:mm' }}
-                    format="YYYY-MM-DD HH:mm"
-                    onOk={onOk}
-                />
+            <div className='date-container'>
+                <div className='input-group'>
+                    <span className='label'>Duration</span>
+                    <RangePicker
+                        showTime={{ format: 'HH:mm' }}
+                        format="YYYY-MM-DD HH:mm"
+                        onOk={onOk}
+                    />
+                </div>
+                <div className='input-group'>
+                    <span className='label'>Starting day</span>
+                    <DatePicker onChange={handleSelectStartDate} />
+                </div>
+                <div className='input-group'>
+                    <span className='label'>Aviable Dates</span>
+                    <DatePicker onChange={onChange} />
+                </div>
             </div>
-            <div className = 'input-group'>
-                <span>Starting day</span>
-                <DatePicker onChange={handleSelectStartDate} />
-            </div>
-            <div className = 'input-group'>
-                <span>Aviable Dates</span>
-                <DatePicker onChange={onChange} />
-            </div> 
             <DynamicInput
                 name='en_highlights'
                 label='Highlights'
@@ -229,10 +232,12 @@ const CreateTour = () => {
                 label='Что нужно'
                 handleDynamicInputChange={handleDynamicInputChange}
             />
-            <Upload {...props}>
-                Upload
-            </Upload>
-
+            <div className='picture-upload'>
+                <div className='label'>Upload</div>
+                <Upload {...props} listType='picture-card'>
+                    <PlusOutlined />
+                </Upload>
+            </div>
             <Divider />
             <div className='buttons-container'>
                 <Button onClick={resetData} className='reset' >Reset</Button>

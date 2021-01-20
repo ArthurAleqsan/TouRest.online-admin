@@ -25,8 +25,7 @@ const DynamicInput = ({ label, name, handleDynamicInputChange }) => {
     };
     return (
         <div className='dynamic-input'>
-            <div><span>{label}</span></div>
-            
+            <span className='label'>{label}</span>
             {fields.map((field, id) =>
                 <div key={`${field}-${id}`} className='input'>
                     <InputGroup
@@ -34,7 +33,7 @@ const DynamicInput = ({ label, name, handleDynamicInputChange }) => {
                         handleChange={(e) => handleChange(id, e)}
                         value={field.value}
                         name={name}
-
+                        fromDynamicInput={false}
                     />
                     <button type="button" onClick={() => handleRemove(id)} className='btns'>
                         <img src='/assets/images/icons/delete.svg' />
