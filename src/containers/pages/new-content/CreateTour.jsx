@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
-import { Button, Select, DatePicker, Divider } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Select, DatePicker, Divider, Upload, message } from 'antd';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { CONFIG } from '../../../util/config';
 import { getUsers } from '../../../store/user/user.actions';
 import { getCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DinamicInput';
+import { createTour } from '../../../store/tours/tour.actions';
 
 
 
@@ -19,7 +20,26 @@ const LANGUAGES = ["Русский", "English"].map(language => <Option key={lan
 const CITIES = cities.map(city => <Option key={city}>{city}</Option>);
 
 const CreateTour = () => {
+
+    const props = {
+        name: 'file',
+        action: '/v1/media/upload',
+        headers: {
+            'Cache-Control': 'no-cache',
+            "authorization": `Bearer ${localStorage.getItem('token')}`,
+        },
+        onChange(info) {
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+                console.log(info.file.response[0]);
+                setTourValues({ ...tourValues, images: [...tourValues.images, info.file.response[0]] });
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
     const dispatch = useDispatch();
+    const { getState } = useStore();
     const { users } = useSelector(s => s.user);
     const { categories } = useSelector(s => s.categories);
     useEffect(() => {
@@ -31,7 +51,8 @@ const CreateTour = () => {
     const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
     const [tourValues, setTourValues] = useState(tour_schema);
     const handleCreate = () => {
-        console.log(tourValues);
+        createTour(dispatch, getState, tourValues);
+
     }
     const resetData = () => {
         setTourValues(tour_schema);
@@ -59,16 +80,17 @@ const CreateTour = () => {
     }
 
     const onOk = value => {
-        console.log('onOk: ', value);
-        // console.log(value[1].diff(value[0]))
-    }
-    const onChange = (value, dateString) => {
-        
-        // console.log('Selected Time: ', value);
-        // console.log('Formatted Selected Time: ', dateString);
+        const duration = new Date(value[1]).getTime() - new Date(value[0]).getTime();
+        setTourValues({ ...tourValues, duration });
     }
     const handleDynamicInputChange = (key, val) => {
         setTourValues({ ...tourValues, [key]: val });
+    }
+    const onChange = (date) => {
+        setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
+    }
+    const handleSelectStartDate = (date) => {
+        setTourValues({ ...tourValues, startDateAndTime: new Date(date).toISOString() })
     }
 
     return (
@@ -141,7 +163,7 @@ const CreateTour = () => {
                     {LANGUAGES}
                 </Select>
             </div>
-            <div className='input-group'>
+            {/* <div className='input-group'>
                 <span className='label'>Rate</span>
                 <Select
                     style={{ width: '100%' }}
@@ -150,13 +172,23 @@ const CreateTour = () => {
                 >
                     {RATES}
                 </Select>
+            </div> */}
+            <div className='input-group'>
+                <span>Duration</span>
+                <RangePicker
+                    showTime={{ format: 'HH:mm' }}
+                    format="YYYY-MM-DD HH:mm"
+                    onOk={onOk}
+                />
             </div>
-            <RangePicker
-                showTime={{ format: 'HH:mm' }}
-                format="YYYY-MM-DD HH:mm"
-                onChange={onChange}
-                onOk={onOk}
-            />
+            <div className = 'input-group'>
+                <span>Starting day</span>
+                <DatePicker onChange={handleSelectStartDate} />
+            </div>
+            <div className = 'input-group'>
+                <span>Aviable Dates</span>
+                <DatePicker onChange={onChange} />
+            </div> 
             <DynamicInput
                 name='en_highlights'
                 label='Highlights'
@@ -183,7 +215,7 @@ const CreateTour = () => {
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
-                name='en_notSuitable'
+                name='ru_notSuitable'
                 label='Что нельзя'
                 handleDynamicInputChange={handleDynamicInputChange}
             />
@@ -197,6 +229,9 @@ const CreateTour = () => {
                 label='Что нужно'
                 handleDynamicInputChange={handleDynamicInputChange}
             />
+            <Upload {...props}>
+                Upload
+            </Upload>
 
             <Divider />
             <div className='buttons-container'>

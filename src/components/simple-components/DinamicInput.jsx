@@ -25,7 +25,8 @@ const DynamicInput = ({ label, name, handleDynamicInputChange }) => {
     };
     return (
         <div className='dynamic-input'>
-            <span>{label}</span>
+            <div><span>{label}</span></div>
+            
             {fields.map((field, id) =>
                 <div key={`${field}-${id}`} className='input'>
                     <InputGroup

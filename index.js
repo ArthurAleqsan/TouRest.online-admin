@@ -68,6 +68,7 @@ app.use(
         secure,
     })
 );
+
 app.use(async (req, res, next) => {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });

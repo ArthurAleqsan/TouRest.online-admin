@@ -17,7 +17,6 @@ const PrivateRoute = ({ component: RouteComponent, location, ...rest }) => {
     const hasToken = !!localStorage.getItem('token');
     let Component;
     if (user && isTokenExpired) {
-        console.log(user);
         Component = props => (<RouteComponent {...props} />);
     } else {
         localStorage.clear();

@@ -16,3 +16,7 @@ export const getTours = (dispatch) => {
             }
         })
 }
+export const createTour = (dispatch, getState, data) => {
+    ToursService.createTour(data)
+    .then(res => console.log(res))
+}
