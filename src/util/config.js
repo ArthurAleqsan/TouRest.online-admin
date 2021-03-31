@@ -32,6 +32,6 @@ export const CONFIG = {
         url: '',
         city: '',
     },
-    cities : ['Sharm El Sheikh', 'Hurgada'],
+    cities : ['Sharm El Sheikh', 'Hurgada', 'Aswan'],
     roles : ['manager', 'member'],
 };
