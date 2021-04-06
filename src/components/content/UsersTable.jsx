@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
 import Table from './Table';
 
-const UsersTable = ({isManagers}) => {
+const UsersTable = ({ isManagers }) => {
     const { users, managers } = useSelector(s => s.user);
     const history = useHistory();
     const data = isManagers ? managers : users;
@@ -16,13 +16,13 @@ const UsersTable = ({isManagers}) => {
         history.push(`/users/edit/id=${id}`);
     }
     return (
-        <>
-            <Divider orientation="left">Users</Divider>
+        <div className='table-container'>
+            <Divider orientation="left" className='page-header'>Users</Divider>
             {data && data.length == 0 ? <Row>
                 <Col className="gutter-row" span={6}>
                     <div>Do not have Users</div>
                 </Col>
-            </Row> : <Row key={0}>
+            </Row> : <Row key={0} className='table-header'>
                     <Col className="gutter-row" span={5}>
                         <div>First Name</div>
                     </Col>
@@ -38,7 +38,7 @@ const UsersTable = ({isManagers}) => {
                     <Col className="gutter-row" />
                 </Row>}
             {data ? data.map(user => {
-                return <Row key={user.id}>
+                return <Row key={user.id} className='table-content'>
                     <Table
                         data={user}
                         cols={[{
@@ -61,9 +61,10 @@ const UsersTable = ({isManagers}) => {
                     />
                 </Row>
             }) : <Spin />}
-            <Divider />
-            <Button type='primary' onClick={handleRedirect}>Create User</Button>
-        </>
+            <div className='button'>
+                <Button type='primary' onClick={handleRedirect}>Create User</Button>
+            </div>
+        </div>
     )
 };
 

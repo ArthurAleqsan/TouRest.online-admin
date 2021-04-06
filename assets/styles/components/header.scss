@@ -1,19 +1,42 @@
 .header {
+    height: 70px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    justify-content: space-around;
+    z-index: 999;
     display: flex;
-    padding: 20px 80px;
-    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     .logo {
         width: 120px;
+        height: 45px;
+    }
+    .navigation {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto;
+        span {
+            font-size: 16px;
+        }
+
+        .activeNav {
+            color: #415bac !important;
+            font-weight: 600;
+        }
     }
     .log-out {
         display: flex;
+        align-items: center;
         .img {
             width: 15px;
-            margin-left: 5px;
+            margin-left: 8px;
         }
         .logout {
             cursor: pointer;
-            font-weight: bolder;
         }
     }
 }

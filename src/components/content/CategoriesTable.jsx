@@ -15,17 +15,17 @@ const CategoriesTable = () => {
         history.push(`/categories/edit/id=${id}`);
     }
     return (
-        <>
-            <Divider orientation="left">Categories</Divider>
-            {categories && categories.length == 0 ? <Row>
+        <div className='table-container'>
+            <Divider orientation="left" className='page-header'>Categories</Divider>
+            {categories && categories.length == 0 ? <Row >
                 <Col className="gutter-row" span={6}>
                     <div>Do not have categories</div>
                 </Col>
-            </Row> : <Row key={0}>
-                    <Col className="gutter-row" span={5}>
+            </Row> : <Row key={0} className='table-header'>
+                    <Col className="gutter-row" span={6}>
                         <div>Image</div>
                     </Col>
-                    <Col className="gutter-row" span={5}>
+                    <Col className="gutter-row" span={4}>
                         <div>City</div>
                     </Col>
                     <Col className="gutter-row" span={5}>
@@ -37,16 +37,16 @@ const CategoriesTable = () => {
                     <Col className="gutter-row" />
                 </Row>}
             {categories ? categories.map(category => {
-                return <Row key={category.id}>
-                    <Table 
-                        data = {category}
-                        cols = {[{
+                return <Row key={category.id} className='table-content'>
+                    <Table
+                        data={category}
+                        cols={[{
                             key: 'url',
-                            sp: 5
+                            sp: 6,
                         },
                         {
                             key: 'city',
-                            sp: 5
+                            sp: 4
                         },
                         {
                             key: 'en_name',
@@ -56,13 +56,14 @@ const CategoriesTable = () => {
                             key: 'ru_name',
                             sp: 5
                         }]}
-                        path = 'categories'
+                        path='categories'
                     />
                 </Row>
             }) : <Spin />}
-            <Divider />
-            <Button type='primary' onClick={handleRedirect}>Create category</Button>
-        </>
+            <div className='button' >
+                <Button type='primary' onClick={handleRedirect}>Create category</Button>
+            </div>
+        </div>
     )
 };
 
