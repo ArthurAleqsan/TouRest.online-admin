@@ -1,6 +1,7 @@
 //User types
 export const SET_USERS = 'SET_USERS';
 export const SET_USER = 'SET_USER';
+export const SET_MANAGERS = 'SET_MANAGERS';
 
 // Tours types
 export const SET_TOURS = 'SET_TOURS';

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
 import { useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Table from './Table';
 
-const UsersTable = () => {
-    const { users } = useSelector(s => s.user);
+const UsersTable = ({isManagers}) => {
+    const { users, managers } = useSelector(s => s.user);
     const history = useHistory();
+    const data = isManagers ? managers : users;
+
     const handleRedirect = () => {
         history.push('/users/create');
     }
@@ -16,7 +18,7 @@ const UsersTable = () => {
     return (
         <>
             <Divider orientation="left">Users</Divider>
-            {users && users.length == 0 ? <Row>
+            {data && data.length == 0 ? <Row>
                 <Col className="gutter-row" span={6}>
                     <div>Do not have Users</div>
                 </Col>
@@ -35,7 +37,7 @@ const UsersTable = () => {
                     </Col>
                     <Col className="gutter-row" />
                 </Row>}
-            {users ? users.map(user => {
+            {data ? data.map(user => {
                 return <Row key={user.id}>
                     <Table
                         data={user}
@@ -55,7 +57,7 @@ const UsersTable = () => {
                             key: 'role',
                             sp: 5
                         }]}
-                        path = 'users'
+                        path='users'
                     />
                 </Row>
             }) : <Spin />}

@@ -6,7 +6,7 @@ class UsersService extends Request {
         super('/users');
     }
 
-    createUser(data) {
+    createManager(data) {
         const options = {
             method: 'POST',
             body: JSON.stringify(data)
@@ -21,6 +21,14 @@ class UsersService extends Request {
         };
         return this.send({
             path: '/', options,
+        }).then(({ json, status }) => ({ json, status }));
+    }
+    getManagers() {
+        const options = {
+            method: 'GET',
+        };
+        return this.send({
+            path: '/manager', options,
         }).then(({ json, status }) => ({ json, status }));
     }
     getUserById(id) {

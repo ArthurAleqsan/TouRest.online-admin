@@ -1,18 +1,29 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PropType from 'prop-types'
 import UsersTable from '../../../components/content/UsersTable';
-import { getUsers } from '../../../store/user/user.actions';
+import { getManagers, getUsers } from '../../../store/user/user.actions';
 
-const Users = () => {
+const Users = ({ isManagers }) => {
     const dispatch = useDispatch();
+    const { users, managers } = useSelector(s => s.user);
     useEffect(() => {
-        getUsers(dispatch);
-    }, [])
+        console.log(1234567);
+        if(isManagers && !managers) {
+            getManagers(dispatch)
+        } else if(!users) {
+            getUsers(dispatch)
+        }
+    }, []);
     return (
         <div className='users-container'>
-            <UsersTable />
+            <UsersTable isManagers = {isManagers} />
         </div>
     )
 };
+
+Users.propTypes = {
+    isManagers: PropType.bool, 
+}
 
 export default Users;

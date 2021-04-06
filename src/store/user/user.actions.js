@@ -51,8 +51,22 @@ export const getUsers = (dispatch) => {
             }
         })
 }
-export const createUser = (dispatch, getState, data) => {
-    UserService.createUser(data)
+export const getManagers = (dispatch) => {
+    UserService.getManagers()
+        .then(res => {
+            const { status, json: managers } = res;
+            if (UserService.isOkStatus(status)) {
+                dispatch({
+                    type: types.SET_MANAGERS,
+                    managers
+                })
+            } else {
+                message.error(managers.message);
+            }
+        })
+}
+export const createManager = (dispatch, getState, data) => {
+    UserService.createManager(data)
         .then(res => {
             const { status, json: user } = res;
             if (UserService.isOkStatus(status)) {

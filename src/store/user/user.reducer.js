@@ -2,6 +2,7 @@ import * as types from './../types';
 
 const initialState = {
     users: null,
+    managers: null,
     user: localStorage.user ? JSON.parse(localStorage.getItem('user')) : null,
 };
 
@@ -11,6 +12,11 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: action.users,
+            }
+        case types.SET_MANAGERS:
+            return {
+                ...state,
+                managers: action.managers,
             }
         case types.SET_USER:
             return {

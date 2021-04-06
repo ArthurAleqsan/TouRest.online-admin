@@ -3,7 +3,7 @@ import { Button, message } from 'antd';
 import { useDispatch, useStore } from 'react-redux';
 
 import InputGroup from '../../../components/simple-components/InputGroup';
-import { createUser } from '../../../store/user/user.actions';
+import { createManager } from '../../../store/user/user.actions';
 import { isValidObject } from '../../../util/helpers';
 
 const CreateUser = () => {
@@ -27,7 +27,7 @@ const CreateUser = () => {
         if (isValidObject(userFields)) {
             const data = { ...userFields };
             delete data.confirmPassword;
-            createUser(dispatch, getState, data);
+            createManager(dispatch, getState, data);
         } else {
             message.error('Please fill all required filds');
         }
