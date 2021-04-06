@@ -75,7 +75,20 @@ a {
         margin-top: 20px;
     }
 }
-
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    .ant-btn {
+        width: 100px;
+        height: 30px;
+        margin-right: 10px;
+    }
+    .ant-btn-primary {
+        margin-right: unset;
+        margin-left: 10px;
+        border-color: unset;
+    }
+}
 //create edit tour
 .create-edit-container {
     .input-container {
@@ -89,6 +102,25 @@ a {
             margin-top: 20px;
             img {
                 width: 300px;
+            }
+        }
+    }
+}
+
+// create user
+.create-user-container{
+    .create-elem{
+        width: 70%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        .input-group{
+            display: flex;
+            flex-direction: column;
+            input{
+                width: 400px;
+                height: 30px;
             }
         }
     }

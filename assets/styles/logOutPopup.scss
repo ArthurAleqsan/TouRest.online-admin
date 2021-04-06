@@ -1,8 +1,5 @@
 .logOut-popup {
     width: 300px !important;
-    .ant-modal-content {
-        border-radius: 20px;
-    }
     .logOut-popup-body {
         display: flex;
         flex-direction: column;
@@ -14,22 +11,8 @@
             padding: 0 0 10px;
             font-weight: 600;
         }
-        .button-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px auto 0;
-            .btn {
-                width: 80px;
-            }
-            .cancel {
-                background-image: linear-gradient(90deg, #5b9dfb, #144ac4);
-                margin-left: 5px;
-                color: #fff;
-            }
-            .save {
-                margin-right: 5px;
-                color: #757678;
-            }
+        .buttons-container {
+            margin-top: 20px;
         }
     }
 }

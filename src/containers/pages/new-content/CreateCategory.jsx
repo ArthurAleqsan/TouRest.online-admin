@@ -97,8 +97,10 @@ const CreateCategory = () => {
                 {category.url && <div className='img-container'><img src={category.url} /></div>}
             </div>
             <Divider />
-            <Button onClick={resetData} >Reset</Button>
-            <Button type="primary" onClick={handleCreate} >Submit</Button>
+            <div className='buttons-container'>
+                <Button onClick={resetData} >Reset</Button>
+                <Button type="primary" onClick={handleCreate} >Submit</Button>
+            </div>
         </div>
     )
 };
