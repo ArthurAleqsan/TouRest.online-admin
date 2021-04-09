@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 
-import { Col, } from 'antd';
+import { Button, Col, } from 'antd';
 import PropType from 'prop-types';
 
 
@@ -18,10 +18,10 @@ const Table = ({ data, cols, path }) => {
                 </div>
             </Col>
         })}
-        < Col className="gutter-row" >
-            <div>
-                <span onClick={() => handleRedirectToEdit(data.id)}>edit</span>
-                <span>remove</span>
+        <Col span={4}>
+            <div className='btns-container'>
+                <Button type='primary' className='button' onClick={() => handleRedirectToEdit(data.id)}>Edit</Button>
+                <Button type='danger'>Remove</Button>
             </div>
         </Col >
     </>)

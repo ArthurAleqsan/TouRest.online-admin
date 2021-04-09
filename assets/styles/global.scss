@@ -6,16 +6,7 @@
     width: 80vw;
     max-width: 1280px;
     margin: 0 auto;
-    .navigation {
-        display: flex;
-        background-color: #ffffff;
-        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-        height: 70px;
-        align-items: center;
-        font-size: 16px;
-        font-weight: 600;
-        justify-content: space-around;
-    }
+    padding-top: 100px;
 }
 .btn {
     display: flex;
@@ -23,10 +14,114 @@
     align-items: center;
     height: 30px;
     width: 100px;
-    border-radius: 20px;
     border: 0.5px solid #b7b7b7;
     cursor: pointer;
 }
 a {
     color: unset !important;
+}
+
+// table-container css
+
+.table-container {
+    background: #fff;
+    .page-header {
+        border-top-color: #466bda !important;
+        padding-top: 20px;
+        .ant-divider-inner-text {
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+    .table-header {
+        border: 1px solid hsla(0, 0%, 43.9%, 0.11);
+        margin-bottom: 20px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #4169e1;
+        .ant-col {
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+        .ant-col:not(:last-child) {
+            border-right: 1px solid hsla(0, 0%, 43.9%, 0.11);
+        }
+    }
+    .table-content {
+        border: 1px solid hsla(0, 0%, 43.9%, 0.11);
+        .ant-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        .ant-col:not(:last-child) {
+            border-right: 1px solid hsla(0, 0%, 43.9%, 0.11);
+        }
+    }
+    .btns-container {
+        display: flex;
+        flex-direction: column;
+        .button {
+            margin-bottom: 10px;
+        }
+    }
+    .button {
+        margin-top: 20px;
+    }
+}
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    .ant-btn {
+        width: 100px;
+        height: 30px;
+        margin-right: 10px;
+    }
+    .ant-btn-primary {
+        margin-right: unset;
+        margin-left: 10px;
+        border-color: unset;
+    }
+}
+//create edit tour
+.create-edit-container {
+    .input-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .uploader {
+        margin-top: 20px;
+        .img-container {
+            display: flex;
+            margin-top: 20px;
+            img {
+                width: 300px;
+            }
+        }
+    }
+}
+
+// create user
+.create-user-container{
+    .create-elem{
+        width: 70%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        .input-group{
+            display: flex;
+            flex-direction: column;
+            input{
+                width: 400px;
+                height: 30px;
+            }
+        }
+    }
 }

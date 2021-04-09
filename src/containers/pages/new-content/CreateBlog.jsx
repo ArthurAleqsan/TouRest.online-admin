@@ -39,7 +39,7 @@ const CreateBlog = () => {
         onChange(info) {
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`);
-                setBlogFields({...blogFields, urls: [...blogFields.urls, info.file.response[0]]});
+                setBlogFields({ ...blogFields, urls: [...blogFields.urls, info.file.response[0]] });
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -84,8 +84,10 @@ const CreateBlog = () => {
             <Upload {...props}>
                 Upload
             </Upload>
-            <Button onClick={resetData} >Reset</Button>
-            <Button type="primary" onClick={handleCreate} >Submit</Button>
+            <div className='buttons-container'>
+                <Button onClick={resetData} >Reset</Button>
+                <Button type="primary" onClick={handleCreate} >Submit</Button>
+            </div>
         </div>
     )
 };

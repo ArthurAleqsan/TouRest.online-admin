@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import { Button, Divider, message } from 'antd';
 import { useDispatch, useStore } from 'react-redux';
 
 import InputGroup from '../../../components/simple-components/InputGroup';
@@ -15,6 +15,7 @@ const CreateUser = () => {
         lastName: '',
         password: '',
         confirmPassword: '',
+        phone: '',
     });
     const handleInputGroupChange = e => {
         const { name, value } = e.target
@@ -40,40 +41,53 @@ const CreateUser = () => {
         setUserFields(temp);
     }
     return (
-        <div>
-            <InputGroup
-                label='FirstName'
-                name='firstName'
-                handleChange={handleInputGroupChange}
-                value={userFields.firstName}
-            />
-            <InputGroup
-                label='LastName'
-                name='lastName'
-                handleChange={handleInputGroupChange}
-                value={userFields.lastName}
-            />
-            <InputGroup
-                label='Password'
-                name='password'
-                handleChange={handleInputGroupChange}
-                value={userFields.password}
-                type='password'
-            />
-            <InputGroup
-                label='Confirm password'
-                name='confirmPassword'
-                handleChange={handleInputGroupChange}
-                value={userFields.confirmPassword}
-                type='password'
-            />
-            <InputGroup
-                label='Email'
-                name='email'
-                handleChange={handleInputGroupChange}
-                value={userFields.email}
-                type='email'
-            />
+        <div className='create-user-container'>
+            <div className='create-elem'>
+                <InputGroup
+                    label='FirstName'
+                    name='firstName'
+                    handleChange={handleInputGroupChange}
+                    value={userFields.firstName}
+                />
+                <InputGroup
+                    label='LastName'
+                    name='lastName'
+                    handleChange={handleInputGroupChange}
+                    value={userFields.lastName}
+                />
+            </div>
+            <div className='create-elem'>
+                <InputGroup
+                    label='Password'
+                    name='password'
+                    handleChange={handleInputGroupChange}
+                    value={userFields.password}
+                    type='password'
+                />
+                <InputGroup
+                    label='Confirm password'
+                    name='confirmPassword'
+                    handleChange={handleInputGroupChange}
+                    value={userFields.confirmPassword}
+                    type='password'
+                />
+            </div>
+            <div className='create-elem'>
+                <InputGroup
+                    label='Email'
+                    name='email'
+                    handleChange={handleInputGroupChange}
+                    value={userFields.email}
+                    type='email'
+                />
+                <InputGroup
+                    label='Phone'
+                    name='phone'
+                    handleChange={handleInputGroupChange}
+                    value={userFields.phone}
+                    type='phone'
+                />
+            </div>
             {/* <div className='input-group'>
                 <span>City</span>
                 <Select
@@ -84,8 +98,11 @@ const CreateUser = () => {
                     {ROLES}
                 </Select>
             </div> */}
-            <Button onClick={resetData} >Reset</Button>
-            <Button type="primary" onClick={handleCreate} >Submit</Button>
+            <Divider />
+            <div className='buttons-container'>
+                <Button onClick={resetData} >Reset</Button>
+                <Button type="primary" onClick={handleCreate} >Submit</Button>
+            </div>
         </div>
     )
 };

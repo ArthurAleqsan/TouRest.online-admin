@@ -64,37 +64,43 @@ const CreateCategory = () => {
     };
 
     return (
-        <div>
-            <div className='input-group'>
-                <span>City</span>
-                <Select
-                    style={{ width: '100%' }}
-                    placeholder="Please select category city"
-                    onChange={handleSelect}
+        <div className='create-edit-container'>
+            <div className='input-container'>
+                <div className='input-group'>
+                    <span>City</span>
+                    <Select
+                        style={{ width: '100%' }}
+                        placeholder="Please select category city"
+                        onChange={handleSelect}
                     // defaultValue = {category.city}
-                >
-                    {CITIES}
-                </Select>
+                    >
+                        {CITIES}
+                    </Select>
+                </div>
+                <InputGroup
+                    name='en_name'
+                    label='Category name'
+                    value={category.en_name}
+                    handleChange={handleInputGroupChange}
+                />
+                <InputGroup
+                    name='ru_name'
+                    label='Названия категория'
+                    value={category.ru_name}
+                    handleChange={handleInputGroupChange}
+                />
             </div>
-            <InputGroup
-                name='en_name'
-                label='Category name'
-                value={category.en_name}
-                handleChange={handleInputGroupChange}
-            />
-            <InputGroup
-                name='ru_name'
-                label='Названия категория'
-                value={category.ru_name}
-                handleChange={handleInputGroupChange}
-            />
-            <Upload {...props} multiple={false}>
-                <Button type="primary" >Click to Upload</Button>
-            </Upload>
-            {category.url && <img src={category.url} />}
+            <div className='uploader'>
+                <Upload {...props} multiple={false}>
+                    <Button type="primary" >Click to Upload</Button>
+                </Upload>
+                {category.url && <div className='img-container'><img src={category.url} /></div>}
+            </div>
             <Divider />
-            <Button onClick={resetData} >Reset</Button>
-            <Button type="primary" onClick={handleCreate} >Submit</Button>
+            <div className='buttons-container'>
+                <Button onClick={resetData} >Reset</Button>
+                <Button type="primary" onClick={handleCreate} >Submit</Button>
+            </div>
         </div>
     )
 };

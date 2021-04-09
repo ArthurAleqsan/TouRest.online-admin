@@ -57,16 +57,17 @@ const BlogTable = () => {
                         {
                             key: 'en_description',
                             sp: 5
-                        },                        {
+                        }, {
                             key: 'ru_description',
                             sp: 5
                         }]}
-                        path = 'blogs'
+                        path='blogs'
                     />
                 </Row>
             }) : <Spin />}
-            <Divider />
-            <Button type='primary' onClick={handleRedirect}>Create Blog post</Button>
+            <div className='button'>
+                <Button type='primary' onClick={handleRedirect}>Create Blog post</Button>
+            </div>
         </>
     )
 };

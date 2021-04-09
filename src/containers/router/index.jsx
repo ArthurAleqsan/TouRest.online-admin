@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from "react-router-dom";
+import Header from '../../components/header/Header';
 import Login from '../pages/auth/Login';
 import App from './App';
 import PrivateRoute from './PrivateRoute';
@@ -11,7 +12,7 @@ const MainRouter = () => {
     const PUBLIC_PATH = '/login';
 
     return (
-        <div className='main-conrainer'>
+        <div className='main-container'>
             <Switch>
                 <PublicRoute user={user} path={PUBLIC_PATH} >
                     <Switch>

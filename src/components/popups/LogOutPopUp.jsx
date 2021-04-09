@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
 
 const LogOutPopUp = ({ visible, setVisible, handleCancel, handleSubmit }) => {
     return (
@@ -15,9 +15,9 @@ const LogOutPopUp = ({ visible, setVisible, handleCancel, handleSubmit }) => {
         >
             <div className='logOut-popup-body'>
                 <div className='logOut-popup-header'>Are you sure to log out ?</div>
-                <div className='button-container'>
-                    <div className='btn save' onClick={handleSubmit}>Yes</div>
-                    <div className='btn cancel' onClick={handleCancel}>No</div>
+                <div className='buttons-container'>
+                    <Button onClick={handleSubmit}>Yes</Button>
+                    <Button type='primary' onClick={handleCancel}>No</Button>
                 </div>
             </div>
         </Modal>

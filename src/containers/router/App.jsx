@@ -5,11 +5,13 @@ import NestedRouter from './NestedRouter';
 
 const App = () => {
     return (
-        <div className='main-content'>
+        <>
             <Header />
-            <Navigation />
-            <NestedRouter />
-        </div>
+            <div className='main-content'>
+                {/* <Navigation /> */}
+                <NestedRouter />
+            </div>
+        </>
     )
 };
 

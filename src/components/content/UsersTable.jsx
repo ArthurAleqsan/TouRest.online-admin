@@ -17,13 +17,18 @@ const UsersTable = ({ isManagers }) => {
         history.push(`/users/edit/id=${id}`);
     }
     return (
+<<<<<<< HEAD
         <>
             <Divider orientation="left">{isManagers ? 'Managers' : 'Users'}</Divider>
+=======
+        <div className='table-container'>
+            <Divider orientation="left" className='page-header'>Users</Divider>
+>>>>>>> 18bcea66ee639afd6630adfe75f792dc198e00fd
             {data && data.length == 0 ? <Row>
                 <Col className="gutter-row" span={6}>
                     <div>Do not have {isManagers ? 'Managers' : 'Users'}</div>
                 </Col>
-            </Row> : <Row key={0}>
+            </Row> : <Row key={0} className='table-header'>
                     <Col className="gutter-row" span={5}>
                         <div>First Name</div>
                     </Col>
@@ -39,7 +44,7 @@ const UsersTable = ({ isManagers }) => {
                     <Col className="gutter-row" />
                 </Row>}
             {data ? data.map(user => {
-                return <Row key={user.id}>
+                return <Row key={user.id} className='table-content'>
                     <Table
                         data={user}
                         cols={[{
@@ -62,9 +67,16 @@ const UsersTable = ({ isManagers }) => {
                     />
                 </Row>
             }) : <Spin />}
+<<<<<<< HEAD
             <Divider />
             {isManagers && <Button type='primary' onClick={handleRedirect}>Create Manager</Button>}
         </>
+=======
+            <div className='button'>
+                <Button type='primary' onClick={handleRedirect}>Create User</Button>
+            </div>
+        </div>
+>>>>>>> 18bcea66ee639afd6630adfe75f792dc198e00fd
     )
 };
 
