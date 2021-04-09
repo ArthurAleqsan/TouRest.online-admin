@@ -1,10 +1,11 @@
 import React from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
 import { useSelector } from 'react-redux';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import PropType from 'prop-types';
 import Table from './Table';
 
-const UsersTable = ({isManagers}) => {
+const UsersTable = ({ isManagers }) => {
     const { users, managers } = useSelector(s => s.user);
     const history = useHistory();
     const data = isManagers ? managers : users;
@@ -17,10 +18,10 @@ const UsersTable = ({isManagers}) => {
     }
     return (
         <>
-            <Divider orientation="left">Users</Divider>
+            <Divider orientation="left">{isManagers ? 'Managers' : 'Users'}</Divider>
             {data && data.length == 0 ? <Row>
                 <Col className="gutter-row" span={6}>
-                    <div>Do not have Users</div>
+                    <div>Do not have {isManagers ? 'Managers' : 'Users'}</div>
                 </Col>
             </Row> : <Row key={0}>
                     <Col className="gutter-row" span={5}>
@@ -57,14 +58,18 @@ const UsersTable = ({isManagers}) => {
                             key: 'role',
                             sp: 5
                         }]}
-                        path='users'
+                        path={isManagers ? 'managers' : 'users'}
                     />
                 </Row>
             }) : <Spin />}
             <Divider />
-            <Button type='primary' onClick={handleRedirect}>Create User</Button>
+            {isManagers && <Button type='primary' onClick={handleRedirect}>Create Manager</Button>}
         </>
     )
 };
+
+UsersTable.propTypes = {
+    isManagers: PropType.bool,
+}
 
 export default UsersTable;
