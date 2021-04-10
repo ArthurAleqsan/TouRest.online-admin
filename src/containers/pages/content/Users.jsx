@@ -8,7 +8,7 @@ const Users = ({ isManagers }) => {
     const dispatch = useDispatch();
     const { users, managers } = useSelector(s => s.user);
     useEffect(() => {
-        if (isManagers && !managers) {
+        if(isManagers && !managers) {
             getManagers(dispatch)
         } else if (!users) {
             getUsers(dispatch)

@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
+<<<<<<< HEAD
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
 import PropType from 'prop-types';
 import { removeUser } from '../../store/user/user.actions';
+=======
+import { useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import PropType from 'prop-types';
+>>>>>>> a49a148243cf870aa330cb45699526b83a450f12
 import Table from './Table';
 import RemoveLogOutPopUp from '../popups/RemoveLogOutPopUp';
 
@@ -30,7 +36,7 @@ const UsersTable = ({ isManagers }) => {
             <Divider orientation="left" className='page-header'>Users</Divider>
             {data && data.length == 0 ? <Row>
                 <Col className="gutter-row" span={6}>
-                    <div>Do not have Users</div>
+                    <div>Do not have {isManagers ? 'Managers' : 'Users'}</div>
                 </Col>
             </Row> : <Row key={0} className='table-header'>
                     <Col className="gutter-row" span={5}>
@@ -76,6 +82,7 @@ const UsersTable = ({ isManagers }) => {
                         handleCancel={() => setVisible(false)}
                         handleSubmit={() => handleRemove(user.id)}
 
+                        path={isManagers ? 'managers' : 'users'}
                     />
                 </Row>
 
@@ -89,5 +96,6 @@ const UsersTable = ({ isManagers }) => {
 UsersTable.propTypes = {
     isManagers: PropType.bool,
 };
+
 
 export default UsersTable;

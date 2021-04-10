@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import ToursService from '../../services/ToursService';
+import { removeFromArray, updateInArray } from '../../util/helpers';
 import * as types from './../types';
 
 export const getTours = (dispatch) => {
@@ -18,5 +19,42 @@ export const getTours = (dispatch) => {
 }
 export const createTour = (dispatch, getState, data) => {
     ToursService.createTour(data)
-    .then(res => console.log(res))
+        .then(res => {
+            const { status, json } = res;
+            if (ToursService.isOkStatus(status)) {
+                const { tours } = getState().tours;
+                dispatch({
+                    type: types.SET_TOURS,
+                    tours: tours ? [json, ...tours] : [json]
+                })
+            }
+        })
+}
+
+export const editTour = (dispatch, getState, data, id) => {
+    ToursService.updateTourById(id, data)
+        .then(res => {
+            const { status, json } = res;
+            if (ToursService.isOkStatus(status)) {
+                const { tours } = getState().tours;
+                const _newTours = updateInArray(tours, t => t.id == id, () => json);
+                dispatch({
+                    type: types.SET_TOURS,
+                    tours: _newTours
+                })
+            }
+        })
+}
+export const removeTour = (dispatch, getState, id) => {
+    ToursService.removeTour(id)
+    .then(res => {
+        if(ToursService.isOkStatus(res.status)) {
+            const { tours } = getState().tours;
+            const _newTours = removeFromArray(tours, t => t.id == id);
+            dispatch({
+                type: types.SET_TOURS,
+                tours: _newTours
+            })
+        }
+    })
 }
