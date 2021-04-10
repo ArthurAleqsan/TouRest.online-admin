@@ -2,7 +2,7 @@ import * as types from './../types';
 import { message } from 'antd';
 import AuthService from "../../services/AuthService";
 import UserService from '../../services/UserService';
-import { updateInArray } from '../../util/helpers';
+import { removeFromArray, updateInArray } from '../../util/helpers';
 
 export const login = (dispatch, form) => {
     const hide = message.loading('Logining in...');
@@ -93,6 +93,24 @@ export const editUser = (dispatch, getState, id, data) => {
                 })
             } else {
                 message.error(user.message);
+            }
+        })
+}
+
+export const removeUser = (dispatch, getState, id) => {
+    console.log(id)
+    UserService.removeUser(id)
+        .then(res => {
+            const { status,json} = res;
+            if (UserService.isOkStatus(status)) {
+                const { users } = getState().users;
+                const newUsers = removeFromArray(users, user => user.id == id);
+                dispatch({
+                    type: types.SET_USERS,
+                    users: newUsers,
+                });
+            } else {
+                message.error(json.message);
             }
         })
 }

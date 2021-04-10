@@ -54,6 +54,11 @@ a {
     }
     .table-content {
         border: 1px solid hsla(0, 0%, 43.9%, 0.11);
+        .img-container {
+            height: 180px;
+            width: 95%;
+            margin: 0 auto;
+        }
         .ant-col {
             display: flex;
             justify-content: center;
@@ -94,6 +99,19 @@ a {
     .input-container {
         display: flex;
         justify-content: space-between;
+        .input-group {
+            flex-direction: column;
+            display: flex;
+            span {
+                margin-bottom: 10px;
+            }
+            .ant-select {
+                width: 350px !important;
+            }
+            .ant-input {
+                width: 300px;
+            }
+        }
     }
     .uploader {
         margin-top: 20px;
@@ -108,17 +126,17 @@ a {
 }
 
 // create user
-.create-user-container{
-    .create-elem{
+.create-user-container {
+    .create-elem {
         width: 70%;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
         margin-bottom: 15px;
-        .input-group{
+        .input-group {
             display: flex;
             flex-direction: column;
-            input{
+            input {
                 width: 400px;
                 height: 30px;
             }

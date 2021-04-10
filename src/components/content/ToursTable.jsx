@@ -9,6 +9,9 @@ const ToursTable = () => {
     const handleRedirect = () => {
         history.push('/tours/create');
     }
+    const handleRedirectToEdit = (id) => {
+        history.push(`/tour/edit/id=${id}`);
+    }
     return (
         <div className='table-container'>
             <Divider orientation="left" className='page-header'>Tours</Divider>
@@ -19,22 +22,30 @@ const ToursTable = () => {
             </Row>}
             <Row className='table-header'>
                 <Col span={6}>Image</Col>
-                <Col span={4}>Name</Col>
+                <Col span={3}>Name</Col>
                 <Col span={3}>Manager</Col>
                 <Col span={3}>Rate</Col>
-                <Col span={4}>Adults price</Col>
-                <Col span={4}>Child price</Col>
+                <Col span={3}>Adults price</Col>
+                <Col span={3}>Child price</Col>
             </Row>
             {tours ? tours.map(tour => {
                 return <Row key={tour.id} className='table-content'>
-                    <Col span={6}>
-                        <img src={tour.images[0]} />
+                    <Col span={6} >
+                        <div className='img-container'>
+                            <img src={tour.images[0]} />
+                        </div>
                     </Col>
-                    <Col span={4}>{tour.en_name}</Col>
+                    <Col span={3}>{tour.en_name}</Col>
                     <Col span={3}>{tour.manager.firstName} {tour.manager.lastName}</Col>
                     <Col span={3}>{tour.rate}</Col>
-                    <Col span={4}>{tour.priceForAdults}</Col>
-                    <Col span={4}>{tour.priceForChildren}</Col>
+                    <Col span={3}>{tour.priceForAdults}</Col>
+                    <Col span={3}>{tour.priceForChildren}</Col>
+                    <Col span={3}>
+                        <div className='btns-container'>
+                            <Button type='primary' className='button' onClick={() => handleRedirectToEdit(tour.id)}>Edit</Button>
+                            <Button type='danger'>Remove</Button>
+                        </div>
+                    </Col >
                 </Row>
             }) : <Spin />}
             <div className='button'>

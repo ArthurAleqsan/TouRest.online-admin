@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
+import PropType from 'prop-types';
+import { removeUser } from '../../store/user/user.actions';
 import Table from './Table';
+import RemoveLogOutPopUp from '../popups/RemoveLogOutPopUp';
 
 const UsersTable = ({ isManagers }) => {
     const { users, managers } = useSelector(s => s.user);
+    const [visible, setVisible] = useState(false);
     const history = useHistory();
+    const dispatch = useDispatch();
+    const { getState } = useStore();
     const data = isManagers ? managers : users;
 
     const handleRedirect = () => {
         history.push('/users/create');
+    }
+    const handleRemove = (id) => {
+        removeUser(dispatch, getState, id);
+        setVisible(false);
     }
     const handleRedirectToEdit = (id) => {
         history.push(`/users/edit/id=${id}`);
@@ -58,14 +68,26 @@ const UsersTable = ({ isManagers }) => {
                             sp: 5
                         }]}
                         path='users'
+                        handleRmove={() => setVisible(true)}
+                    />
+                    <RemoveLogOutPopUp
+                        visible={visible}
+                        setVisible={setVisible}
+                        handleCancel={() => setVisible(false)}
+                        handleSubmit={() => handleRemove(user.id)}
+
                     />
                 </Row>
+
             }) : <Spin />}
             <div className='button'>
                 <Button type='primary' onClick={handleRedirect}>Create User</Button>
             </div>
         </div>
     )
+};
+UsersTable.propTypes = {
+    isManagers: PropType.bool,
 };
 
 export default UsersTable;

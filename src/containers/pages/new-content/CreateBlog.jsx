@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, message, Upload } from 'antd';
 import { useDispatch, useStore } from 'react-redux';
+import { getParam } from '../../../util/helpers';
 import InputGroup from '../../../components/simple-components/InputGroup';
 
 import { isValidObject } from '../../../util/helpers';
-import { createBlog } from '../../../store/blog/blog.actions';
+import { createBlog, editBlog } from '../../../store/blog/blog.actions';
 
 const CreateBlog = () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
+    const [editableId, setEditableId] = useState('');
     const [blogFields, setBlogFields] = useState({
-        en_title: '',
-        ru_title: '',
-        en_description: '',
-        ru_description: '',
-        urls: [],
+       
+        
     });
+
+    useEffect(() => {
+        if (location.pathname.includes('edit')) {
+            const id = getParam(location.pathname, 'id=', 1);
+            editBlog(dispatch, id)
+            setEditableId(id);
+
+        }
+    }, []);
     const handleInputGroupChange = e => {
         const { name, value } = e.target
         setBlogFields({ ...blogFields, [name]: value });
@@ -24,7 +32,7 @@ const CreateBlog = () => {
         if (isValidObject(blogFields)) {
             const data = { ...blogFields };
             delete data.confirmPassword;
-            createBlog(dispatch, getState, data);
+            editableId ? editBlog(dispatch, getState, editableId, data) : createBlog(dispatch, getState, data);
         } else {
             message.error('Please fill all required filds');
         }

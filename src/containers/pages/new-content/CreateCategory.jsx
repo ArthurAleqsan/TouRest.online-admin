@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Divider, Select, Upload, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useStore, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ const { Option } = Select;
 
 const CITIES = cities.map(city => <Option key={city}>{city}</Option>);
 
-const CreateCategory = () => {
+const CreateCategory = ({fromEdit}) => {
     const dispatch = useDispatch();
     const { getState } = useStore();
     const [editableId, setEditableId] = useState('');
@@ -91,10 +92,10 @@ const CreateCategory = () => {
                 />
             </div>
             <div className='uploader'>
-                <Upload {...props} multiple={false}>
-                    <Button type="primary" >Click to Upload</Button>
+                <Upload {...props} multiple={false} listType='picture-card'>
+                    <PlusOutlined />
                 </Upload>
-                {category.url && <div className='img-container'><img src={category.url} /></div>}
+                {fromEdit && category.url && <div className='img-container'><img src={category.url} /></div>}
             </div>
             <Divider />
             <div className='buttons-container'>

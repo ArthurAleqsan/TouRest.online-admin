@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 
-const LogOutPopUp = ({ visible, setVisible, handleCancel, handleSubmit }) => {
+const RemoveLogOutPopUp = ({ visible, setVisible, handleCancel, handleSubmit, fromLogOut }) => {
     return (
         <Modal
             visible={visible}
@@ -14,7 +14,7 @@ const LogOutPopUp = ({ visible, setVisible, handleCancel, handleSubmit }) => {
             className='logOut-popup'
         >
             <div className='logOut-popup-body'>
-                <div className='logOut-popup-header'>Are you sure to log out ?</div>
+                <div className='logOut-popup-header'>{fromLogOut ? "Are you sure to log out ?" : `Are your sure to remove ?`}</div>
                 <div className='buttons-container'>
                     <Button onClick={handleSubmit}>Yes</Button>
                     <Button type='primary' onClick={handleCancel}>No</Button>
@@ -24,12 +24,13 @@ const LogOutPopUp = ({ visible, setVisible, handleCancel, handleSubmit }) => {
     )
 };
 
-LogOutPopUp.propTypes = {
+RemoveLogOutPopUp.propTypes = {
     visible: PropTypes.bool.isRequired,
     setVisible: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     handleCancel: PropTypes.func.isRequired,
+    fromLogOut: PropTypes.bool,
 };
 
-export default LogOutPopUp;
+export default RemoveLogOutPopUp;
 

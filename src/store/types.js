@@ -13,3 +13,4 @@ export const SET_CATEGORY_VALUE = 'SET_CATEGORY_VALUE';
 
 // Blog types
 export const SET_BLOGS = 'SET_BLOGS';
+export const SET_BLOG = 'SET_BLOG';

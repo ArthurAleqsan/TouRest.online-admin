@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import Table from './Table';
-
+import RemoveLogOutPopUp from '../popups/RemoveLogOutPopUp';
+import { removeCategory } from './../../store/categories/category.actions';
 
 const CategoriesTable = () => {
     const { categories } = useSelector(s => s.categories);
+    const [visible, setVisible] = useState(false);
+    const dispatch = useDispatch();
+    const { getState } = useStore();
     const history = useHistory();
     const handleRedirect = () => {
         history.push('/categories/create');
-    }
+    };
+    const handleRemove = (id) => {
+        removeCategory(dispatch, getState, id);
+        setVisible(false);
+    };
     const handleRedirectToEdit = (id) => {
         history.push(`/categories/edit/id=${id}`);
-    }
+    };
     return (
         <div className='table-container'>
             <Divider orientation="left" className='page-header'>Categories</Divider>
@@ -57,12 +65,20 @@ const CategoriesTable = () => {
                             sp: 5
                         }]}
                         path='categories'
+                        handleRmove={() => setVisible(true)}
+                    />
+                    <RemoveLogOutPopUp
+                        visible={visible}
+                        setVisible={setVisible}
+                        handleSubmit={() => handleRemove(category.id)}
+                        handleCancel={() => setVisible(false)}
                     />
                 </Row>
             }) : <Spin />}
             <div className='button' >
                 <Button type='primary' onClick={handleRedirect}>Create category</Button>
             </div>
+
         </div>
     )
 };

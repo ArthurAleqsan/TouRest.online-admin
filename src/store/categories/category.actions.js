@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import CategoriesService from '../../services/CategoriesService';
 import * as types from './../types';
-import {updateInArray} from './../../util/helpers';
+import { removeFromArray, updateInArray } from './../../util/helpers';
 
 export const getCategories = (dispatch) => {
     CategoriesService.getCategories()
@@ -69,6 +69,23 @@ export const editCategory = (dispatch, getState, id, data) => {
                 });
             } else {
                 message.error(category.message);
+            }
+        })
+}
+
+export const removeCategory = (dispatch, getState, id) => {
+    CategoriesService.removeCategory(id)
+        .then(res => {
+            const { status, json } = res;
+            if (CategoriesService.isOkStatus(status)) {
+                const { categories } = getState().categories;
+                const newCategories = removeFromArray(categories, category => category.id == id);
+                dispatch({
+                    type: types.SET_CATEGORIES,
+                    categories: newCategories,
+                });
+            } else {
+                message.error(json.message);
             }
         })
 }

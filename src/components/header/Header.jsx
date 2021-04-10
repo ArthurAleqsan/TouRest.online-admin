@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LogOutPopUp from '../popups/LogOutPopUp';
+import RemoveLogOutPopUp from '../popups/RemoveLogOutPopUp';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/user/user.actions';
-import Navigation from './Navigation';
 
 const Header = () => {
     const [visible, setVisible] = useState(false);
     const pageURL = window.location.href.split('/');
     const [activeNav, setActiveNav] = useState(pageURL[pageURL.length - 1]);
-    const selectedNav = activeNav ? activeNav : 'statistic';
+    const selectedNav = activeNav ? activeNav : '';
     const dispatch = useDispatch();
     const handleCancel = () => {
         setVisible(false);
@@ -27,7 +26,7 @@ const Header = () => {
                 <Link to='/' className='logo'>
                     <img src='/assets/images/logo.png' className='logo' />
                 </Link>
-                <Link to='/' className={`${selectedNav === '' ? 'activeNav' : ''}`}>
+                <Link to='/' className={`${selectedNav === '' ? 'activeNav' : ''}`} onClick={()=>setActiveNav('')}>
                     <span>Statistic</span>
                 </Link>
                 <Link to='/tours' className={`${selectedNav === 'tours' ? 'activeNav' : ''}`} onClick={() => setActiveNav('tours')}>
@@ -54,11 +53,12 @@ const Header = () => {
                 </div>
             </nav>
 
-            <LogOutPopUp
+            <RemoveLogOutPopUp
                 visible={visible}
                 setVisible={setVisible}
                 handleCancel={handleCancel}
                 handleSubmit={handleSubmit}
+                fromLogout={true}
             />
         </header>
     )

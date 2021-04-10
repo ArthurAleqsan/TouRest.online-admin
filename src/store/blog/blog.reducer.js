@@ -1,7 +1,10 @@
 import * as types from './../types';
+import { CONFIG } from '../../util/config';
+const { blog_schema } = CONFIG;
 
 const initialState = {
     blogs: null,
+    blog: { blog_schema }
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -9,7 +12,7 @@ const blogReducer = (state = initialState, action) => {
         case types.SET_BLOGS:
             return {
                 ...state,
-                users: action.users,
+                blogs: action.blogs,
             }
         default:
             return state

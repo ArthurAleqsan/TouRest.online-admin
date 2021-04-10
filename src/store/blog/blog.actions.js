@@ -17,6 +17,20 @@ export const getBlogs = (dispatch) => {
             }
         })
 }
+export const getBlogById = (dispatch, id) => {
+    BlogsService.getBlogById(id)
+        .then(res => {
+            const { status, json: blog } = res;
+            if (BlogsService.isOkStatus(status)) {
+                dispatch({
+                    type: types.SET_BLOG,
+                    blog,
+                });
+            } else {
+                message.error(blog.message);
+            }
+        })
+}
 export const createBlog = (dispatch, getState, data) => {
     BlogsService.createBlog(data)
         .then(res => {
@@ -40,8 +54,8 @@ export const editBlog = (dispatch, getState, id, data) => {
                 const { blogs } = getState().blog;
                 const newBlogs = updateInArray(blogs, blog => blog.id == id, blog);
                 dispatch({
-                    type: types.SET_USERS,
-                    users: newBlogs
+                    type: types.SET_BLOGS,
+                    blogs: newBlogs
                 })
             } else {
                 message.error(blog.message);
@@ -50,17 +64,18 @@ export const editBlog = (dispatch, getState, id, data) => {
 }
 export const removeBlog = (dispatch, getState, id) => {
     BlogsService.removeBlog(id)
-    .then(res => {
-        const { status } = res;
-        if (BlogsService.isOkStatus(status)) {
-            const { blogs } = getState().blog;
-            const newBlogs = removeFromArray(blogs, blog => blog.id == id);
-            dispatch({
-                type: types.SET_USERS,
-                users: newBlogs
-            })
-        } else {
-            message.error('something is wrong');
-        }
-    })
+        .then(res => {
+            const { status,json } = res;
+            if (BlogsService.isOkStatus(status)) {
+                const { blogs } = getState().blog;
+                const newBlogs = removeFromArray(blogs, blog => blog.id == id);
+                dispatch({
+                    type: types.SET_BLOGS,
+                    blogs: newBlogs
+                })
+               
+            } else {
+                message.error(json.message);
+            }
+        })
 }
