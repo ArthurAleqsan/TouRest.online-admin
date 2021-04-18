@@ -73,6 +73,7 @@
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-xhr-backend": "^3.2.2",
     "moment": "^2.29.1",
+    "multiple-date-picker": "^2.1.6",
     "npm": "^6.14.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

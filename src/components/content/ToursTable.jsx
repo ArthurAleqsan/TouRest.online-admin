@@ -1,16 +1,22 @@
 import React from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import { removeTour } from '../../store/tours/tour.actions';
 
 const ToursTable = () => {
     const { tours } = useSelector(s => s.tours);
+    const dispatch = useDispatch();
+    const { getState } = useStore();
     const history = useHistory();
     const handleRedirect = () => {
         history.push('/tours/create');
     }
     const handleRedirectToEdit = (id) => {
         history.push(`/tour/edit/id=${id}`);
+    }
+    const handleRemove = id => {
+        removeTour(dispatch, getState, id);
     }
     return (
         <div className='table-container'>
@@ -43,7 +49,7 @@ const ToursTable = () => {
                     <Col span={3}>
                         <div className='btns-container'>
                             <Button type='primary' className='button' onClick={() => handleRedirectToEdit(tour.id)}>Edit</Button>
-                            <Button type='danger'>Remove</Button>
+                            <Button type='danger' onClick={() => handleRemove(tour.id)}>Remove</Button>
                         </div>
                     </Col >
                 </Row>

@@ -4,7 +4,7 @@ export const CONFIG = {
         en_name: '',
         ru_name: '',
         images: [],
-        startDateAndTime: '',
+        startTime: '',
         hasGuide: true,
         duration: 0,
         languages : [],
@@ -28,6 +28,7 @@ export const CONFIG = {
         en_shortDescription: '',
         ru_shortDescription: '',
         dateType: 'everyday',
+        weekdays: [],
     },
     category_schema: {
         en_name: '',

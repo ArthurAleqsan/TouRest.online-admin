@@ -10,6 +10,8 @@ import { getManagers } from '../../../store/user/user.actions';
 import { getCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour } from '../../../store/tours/tour.actions';
+import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
+import AviableDatesSelector from '../../../components/simple-components/AviableDatesSelector';
 
 
 
@@ -57,6 +59,9 @@ const CreateTour = () => {
         createTour(dispatch, getState, tourValues);
 
     }
+    const handleSelectWeekDate = weekdays => {
+        setTourValues({ ...tourValues, weekdays });
+    }
     const resetData = () => {
         setTourValues(tour_schema);
     }
@@ -86,21 +91,21 @@ const CreateTour = () => {
         setTourValues({ ...tourValues, dateType });
     }
 
-    const onHandleDuration = (value, v,) => {
-        console.log(value.valueOf(), v,);
-        const duration = new Date(v).getMilliseconds()
-        const baseTime = new Date()
-        console.log(duration);
-        setTourValues({ ...tourValues, duration });
+    const onHandleTimeSelect = (value, tymeString, type) => {
+        if (type == 'duration') {
+            const duration = value.valueOf() - moment().startOf('day').valueOf()
+            setTourValues({ ...tourValues, duration });
+        } else if (type == 'start-time') {
+            console.log(tymeString)
+            setTourValues({ ...tourValues, startTime: tymeString });
+        }
+
     }
     const handleDynamicInputChange = (key, val) => {
         setTourValues({ ...tourValues, [key]: val });
     }
     const onChange = (date) => {
         setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
-    }
-    const handleSelectStartDate = (date) => {
-        setTourValues({ ...tourValues, startDateAndTime: new Date(date).toISOString() })
     }
 
     return (
@@ -175,6 +180,18 @@ const CreateTour = () => {
                 handleChange={handleInputGroupChange}
                 textArea
             />
+            <InputGroup
+                label='Price for Adults'
+                value={tourValues.priceForAdults}
+                name='priceForAdults'
+                handleChange={handleInputGroupChange}
+            />
+            <InputGroup
+                label='Price for Children'
+                value={tourValues.priceForChildren}
+                name='priceForChildren'
+                handleChange={handleInputGroupChange}
+            />
             <div className='input-group'>
                 <span className='label'>Tour languages</span>
                 <Select
@@ -212,20 +229,19 @@ const CreateTour = () => {
                 <div className='input-group'>
                     <span className='label'>Duration</span>
                     <TimePicker
-                        onChange={onHandleDuration}
+                        onChange={(t, tStr,) => onHandleTimeSelect(t, tStr, 'duration')}
                     />
                 </div>
                 <div className='input-group'>
                     <span className='label'>Starting time</span>
-                    <DatePicker onChange={handleSelectStartDate} />
+                    <TimePicker onChange={(t, tStr) => onHandleTimeSelect(t, tStr, 'start-time')} />
                 </div>
-                {tourValues.dateType == 'week' && <div>
-                    week
-                    </div>}
-                {tourValues.dateType == 'date' && <div className='input-group'>
-                    <span className='label'>Aviable Dates</span>
-                    <DatePicker onChange={onChange} />
-                </div>}
+                {tourValues.dateType == 'week' && <WeeklyDaysSelector 
+                    onChange = {handleSelectWeekDate}
+                />}
+                {tourValues.dateType == 'date' && <AviableDatesSelector 
+                    onChange = {() => {}}
+                />}
 
             </div>
             <DynamicInput
