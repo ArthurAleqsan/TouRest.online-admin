@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import { Row, Col, Divider, Spin, Button } from 'antd';
-<<<<<<< HEAD
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
 import PropType from 'prop-types';
 import { removeUser } from '../../store/user/user.actions';
-=======
-import { useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
-import PropType from 'prop-types';
->>>>>>> a49a148243cf870aa330cb45699526b83a450f12
 import Table from './Table';
 import RemoveLogOutPopUp from '../popups/RemoveLogOutPopUp';
 

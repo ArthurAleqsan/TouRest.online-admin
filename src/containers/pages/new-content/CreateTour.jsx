@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
-import { Button, Select, DatePicker, Divider, Upload, message } from 'antd';
+import { Button, Select, DatePicker, Divider, Upload, message, TimePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { CONFIG } from '../../../util/config';
-import { getUsers } from '../../../store/user/user.actions';
+import { getManagers } from '../../../store/user/user.actions';
 import { getCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour } from '../../../store/tours/tour.actions';
@@ -41,17 +41,19 @@ const CreateTour = () => {
     };
     const dispatch = useDispatch();
     const { getState } = useStore();
-    const { users } = useSelector(s => s.user);
+    const { managers } = useSelector(s => s.user);
     const { categories } = useSelector(s => s.categories);
     useEffect(() => {
-        getUsers(dispatch);
+        getManagers(dispatch);
         getCategories(dispatch)
     }, [])
-    const USERS = users && users.map(user => <Option key={user.id}>{user.firstName} {user.lastName}</Option>);
+    const USERS = managers && managers.map(user => <Option key={user.id}>{user.firstName} {user.lastName}</Option>);
     const CATEGORIES = categories && categories.map(category => <Option key={category.id}>{category.en_name}</Option>);
     const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
+    const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
     const [tourValues, setTourValues] = useState(tour_schema);
     const handleCreate = () => {
+        console.log(tourValues);
         createTour(dispatch, getState, tourValues);
 
     }
@@ -80,8 +82,15 @@ const CreateTour = () => {
         setTourValues({ ...tourValues, rate });
     }
 
-    const onOk = value => {
-        const duration = new Date(value[1]).getTime() - new Date(value[0]).getTime();
+    const handleSelectDatetype = (dateType) => {
+        setTourValues({ ...tourValues, dateType });
+    }
+
+    const onHandleDuration = (value, v,) => {
+        console.log(value.valueOf(), v,);
+        const duration = new Date(v).getMilliseconds()
+        const baseTime = new Date()
+        console.log(duration);
         setTourValues({ ...tourValues, duration });
     }
     const handleDynamicInputChange = (key, val) => {
@@ -139,6 +148,20 @@ const CreateTour = () => {
                 handleChange={handleInputGroupChange}
             />
             <InputGroup
+                label='Short description'
+                value={tourValues.en_shortDescription}
+                name='en_shortDescription'
+                handleChange={handleInputGroupChange}
+                textArea
+            />
+            <InputGroup
+                label='Краткое описание'
+                value={tourValues.ru_shortDescription}
+                name='ru_shortDescription'
+                handleChange={handleInputGroupChange}
+                textArea
+            />
+            <InputGroup
                 label='Full Description'
                 value={tourValues.en_fullDescription}
                 name='en_fullDescription'
@@ -174,23 +197,36 @@ const CreateTour = () => {
                     {RATES}
                 </Select>
             </div> */}
+            <div className='input-group'>
+                <span className='label'>Date type</span>
+                <Select
+                    style={{ width: '100%' }}
+                    placeholder="Please select rate"
+                    onChange={handleSelectDatetype}
+                    defaultValue='everyday'
+                >
+                    {DATE_TYPES}
+                </Select>
+            </div>
             <div className='date-container'>
                 <div className='input-group'>
                     <span className='label'>Duration</span>
-                    <RangePicker
-                        showTime={{ format: 'HH:mm' }}
-                        format="YYYY-MM-DD HH:mm"
-                        onOk={onOk}
+                    <TimePicker
+                        onChange={onHandleDuration}
                     />
                 </div>
                 <div className='input-group'>
-                    <span className='label'>Starting day</span>
+                    <span className='label'>Starting time</span>
                     <DatePicker onChange={handleSelectStartDate} />
                 </div>
-                <div className='input-group'>
+                {tourValues.dateType == 'week' && <div>
+                    week
+                    </div>}
+                {tourValues.dateType == 'date' && <div className='input-group'>
                     <span className='label'>Aviable Dates</span>
                     <DatePicker onChange={onChange} />
-                </div>
+                </div>}
+
             </div>
             <DynamicInput
                 name='en_highlights'

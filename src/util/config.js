@@ -25,6 +25,9 @@ export const CONFIG = {
         managerId: '',
         en_fullDescription: '',
         ru_fullDescription: '',
+        en_shortDescription: '',
+        ru_shortDescription: '',
+        dateType: 'everyday',
     },
     category_schema: {
         en_name: '',
