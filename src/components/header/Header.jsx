@@ -26,7 +26,7 @@ const Header = () => {
                 <Link to='/' className='logo'>
                     <img src='/assets/images/logo.png' className='logo' />
                 </Link>
-                <Link to='/' className={`${selectedNav === '' ? 'activeNav' : ''}`} onClick={()=>setActiveNav('')}>
+                <Link to='/' className={`${selectedNav === '' ? 'activeNav' : ''}`} onClick={() => setActiveNav('')}>
                     <span>Statistic</span>
                 </Link>
                 <Link to='/tours' className={`${selectedNav === 'tours' ? 'activeNav' : ''}`} onClick={() => setActiveNav('tours')}>
@@ -52,13 +52,12 @@ const Header = () => {
                     <img src={'/assets/images/icons/logout.svg'} alt='log-out' className='img' />
                 </div>
             </nav>
-
             <RemoveLogOutPopUp
                 visible={visible}
                 setVisible={setVisible}
                 handleCancel={handleCancel}
                 handleSubmit={handleSubmit}
-                fromLogout={true}
+                fromLogOut={true}
             />
         </header>
     )

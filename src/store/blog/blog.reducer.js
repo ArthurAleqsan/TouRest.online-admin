@@ -14,6 +14,11 @@ const blogReducer = (state = initialState, action) => {
                 ...state,
                 blogs: action.blogs,
             }
+            case types.SET_BLOG:
+                return {
+                    ...state,
+                    blog: action.blog
+                }
         default:
             return state
     }

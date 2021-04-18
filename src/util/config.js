@@ -35,13 +35,13 @@ export const CONFIG = {
         url: '',
         city: '',
     },
-    blog_schema: {
-        en_title: '',
-        ru_title: '',
-        en_description: '',
-        ru_description: '',
-        urls: "",
-    },
+    // blog_schema: {
+    //     en_title: '',
+    //     ru_title: '',
+    //     en_description: '',
+    //     ru_description: '',
+    //     urls: "",
+    // },
     cities : ['Sharm El Sheikh', 'Hurgada', 'Aswan'],
     roles : ['manager', 'member'],
 };
