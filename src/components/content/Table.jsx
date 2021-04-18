@@ -5,7 +5,7 @@ import { Button, Col, } from 'antd';
 import PropType from 'prop-types';
 
 
-const Table = ({ data, cols, path,handleRmove }) => {
+const Table = ({ data, cols, path, handleRmove }) => {
     const history = useHistory();
     const handleRedirectToEdit = (id) => {
         history.push(`/${path}/edit/id=${id}`);

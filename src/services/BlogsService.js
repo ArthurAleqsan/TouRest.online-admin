@@ -40,6 +40,15 @@ class BlogsService extends Request {
             path: `/${id}`, options,
         }).then(({ json, status }) => ({ json, status }));
     }
+    editBlog(id, data) {
+        const options = {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        };
+        return this.send({
+            path: `/${id}`, options,
+        }).then(({ json, status }) => ({ json, status }));
+    }
     removeBlog(id) {
         const options = {
             method: 'DELETE',
