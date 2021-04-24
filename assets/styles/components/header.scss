@@ -12,6 +12,9 @@
     .logo {
         width: 120px;
         height: 45px;
+        img {
+            object-fit: contain;
+        }
     }
     .navigation {
         display: flex;

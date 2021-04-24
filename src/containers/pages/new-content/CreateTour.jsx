@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
-import { Button, Select, DatePicker, Divider, Upload, message, TimePicker } from 'antd';
+import { Button, Select, Divider, Upload, message, TimePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector, useStore } from 'react-redux';
+import MultipleDatePicker from 'react-multiple-datepicker'
 
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { CONFIG } from '../../../util/config';
@@ -11,11 +12,6 @@ import { getCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour } from '../../../store/tours/tour.actions';
 import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
-import AviableDatesSelector from '../../../components/simple-components/AviableDatesSelector';
-
-
-
-const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 const { tour_schema, cities } = CONFIG;
@@ -104,8 +100,10 @@ const CreateTour = () => {
     const handleDynamicInputChange = (key, val) => {
         setTourValues({ ...tourValues, [key]: val });
     }
-    const onChange = (date) => {
-        setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
+    const onSelectDates = (dates) => {
+        const _dates = dates.map(d => new Date(d));
+        console.log(_dates);
+        // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
     }
 
     return (
@@ -239,8 +237,8 @@ const CreateTour = () => {
                 {tourValues.dateType == 'week' && <WeeklyDaysSelector 
                     onChange = {handleSelectWeekDate}
                 />}
-                {tourValues.dateType == 'date' && <AviableDatesSelector 
-                    onChange = {() => {}}
+                {tourValues.dateType == 'date' && <MultipleDatePicker 
+                    onSubmit = {onSelectDates}
                 />}
 
             </div>
