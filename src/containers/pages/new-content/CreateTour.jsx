@@ -8,7 +8,7 @@ import MultipleDatePicker from 'react-multiple-datepicker'
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { CONFIG } from '../../../util/config';
 import { getManagers } from '../../../store/user/user.actions';
-import { getCategories } from '../../../store/categories/category.actions';
+import { getCategories, setCityCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour } from '../../../store/tours/tour.actions';
 import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
@@ -40,7 +40,7 @@ const CreateTour = () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
     const { managers } = useSelector(s => s.user);
-    const { categories } = useSelector(s => s.categories);
+    const { city_categories: categories} = useSelector(s => s.categories);
     useEffect(() => {
         getManagers(dispatch);
         getCategories(dispatch)
@@ -53,7 +53,7 @@ const CreateTour = () => {
     const handleCreate = () => {
         console.log(tourValues);
         createTour(dispatch, getState, tourValues);
-
+        resetData();
     }
     const handleSelectWeekDate = weekdays => {
         setTourValues({ ...tourValues, weekdays });
@@ -72,6 +72,7 @@ const CreateTour = () => {
     }
     const handleSelect = (city) => {
         setTourValues({ ...tourValues, city });
+        setCityCategories(dispatch, getState, city);
     }
     const handleSelectUser = (managerId) => {
         setTourValues({ ...tourValues, managerId });
@@ -102,8 +103,7 @@ const CreateTour = () => {
     }
     const onSelectDates = (dates) => {
         const _dates = dates.map(d => new Date(d));
-        console.log(_dates);
-        // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
+        setTourValues({ ...tourValues, availableDates: _dates })
     }
 
     return (
@@ -234,11 +234,11 @@ const CreateTour = () => {
                     <span className='label'>Starting time</span>
                     <TimePicker onChange={(t, tStr) => onHandleTimeSelect(t, tStr, 'start-time')} />
                 </div>
-                {tourValues.dateType == 'week' && <WeeklyDaysSelector 
-                    onChange = {handleSelectWeekDate}
+                {tourValues.dateType == 'week' && <WeeklyDaysSelector
+                    onChange={handleSelectWeekDate}
                 />}
-                {tourValues.dateType == 'date' && <MultipleDatePicker 
-                    onSubmit = {onSelectDates}
+                {tourValues.dateType == 'date' && <MultipleDatePicker
+                    onSubmit={onSelectDates}
                 />}
 
             </div>

@@ -16,7 +16,7 @@ const { Option } = Select;
 
 const CITIES = cities.map(city => <Option key={city}>{city}</Option>);
 
-const CreateCategory = ({fromEdit}) => {
+const CreateCategory = ({ fromEdit }) => {
     const dispatch = useDispatch();
     const { getState } = useStore();
     const [editableId, setEditableId] = useState('');

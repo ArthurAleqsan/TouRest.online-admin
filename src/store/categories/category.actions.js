@@ -89,3 +89,12 @@ export const removeCategory = (dispatch, getState, id) => {
             }
         })
 }
+
+export const setCityCategories = (dispatch, getState, city) => {
+    const { categories } = getState().categories;
+    const filteredCategores = categories.filter(category => category.city == city);
+    dispatch({
+        type: types.SET_CITY_CATEGORIES,
+        categories: filteredCategores,
+    })
+}

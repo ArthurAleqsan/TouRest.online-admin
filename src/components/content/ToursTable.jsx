@@ -13,7 +13,7 @@ const ToursTable = () => {
         history.push('/tours/create');
     }
     const handleRedirectToEdit = (id) => {
-        history.push(`/tour/edit/id=${id}`);
+        history.push(`/tours/edit/id=${id}`);
     }
     const handleRemove = id => {
         removeTour(dispatch, getState, id);
