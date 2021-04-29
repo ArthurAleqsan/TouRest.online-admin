@@ -8,7 +8,7 @@ import MultipleDatePicker from 'react-multiple-datepicker'
 import InputGroup from '../../../components/simple-components/InputGroup';
 import { CONFIG } from '../../../util/config';
 import { getManagers } from '../../../store/user/user.actions';
-import { getCategories } from '../../../store/categories/category.actions';
+import { getCategories, setCityCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour, editTour, getTourById } from '../../../store/tours/tour.actions';
 import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
@@ -41,7 +41,7 @@ const CreateTour = () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
     const { managers } = useSelector(s => s.user);
-    const { categories } = useSelector(s => s.categories);
+    const { city_categories: categories} = useSelector(s => s.categories);
     useEffect(() => {
         getManagers(dispatch);
         getCategories(dispatch)
@@ -57,12 +57,18 @@ const CreateTour = () => {
     const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
     const [tourValues, setTourValues] = useState(tour_schema);
     const handleCreate = () => {
+<<<<<<< HEAD
         if (isValidObject(tourValues)) {
             editableId ? editTour(dispatch, getState, editableId, tourValues) : createTour(dispatch, getState, tourValues);
         } else {
             message.error('Please fill all required filds')
         }
 
+=======
+        console.log(tourValues);
+        createTour(dispatch, getState, tourValues);
+        resetData();
+>>>>>>> 5a2e4c2c7d2a54508c219abfaac367c8b1907684
     }
     const handleSelectWeekDate = weekdays => {
         setTourValues({ ...tourValues, weekdays });
@@ -81,6 +87,7 @@ const CreateTour = () => {
     }
     const handleSelect = (city) => {
         setTourValues({ ...tourValues, city });
+        setCityCategories(dispatch, getState, city);
     }
     const handleSelectUser = (managerId) => {
         setTourValues({ ...tourValues, managerId });
@@ -113,6 +120,7 @@ const CreateTour = () => {
         const _dates = dates.map(d => new Date(d));
         console.lo(_dates);
         // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
+        setTourValues({ ...tourValues, availableDates: _dates })
     }
 
     return (

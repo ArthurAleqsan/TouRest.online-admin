@@ -5,6 +5,7 @@ const { category_schema } = CONFIG;
 
 const initialState = {
     categories: null,
+    city_categories: null,
     category: category_schema,
 };
 
@@ -15,6 +16,11 @@ const categoryReducer = (state = initialState, action) => {
                 ...state,
                 categories: action.categories,
             }
+        case types.SET_CITY_CATEGORIES:
+            return {
+                ...state,
+                city_categories: action.categories,
+            }
         case types.SET_CATEGORY:
             return {
                 ...state,
@@ -23,7 +29,7 @@ const categoryReducer = (state = initialState, action) => {
         case types.SET_CATEGORY_VALUE:
             return {
                 ...state,
-                category : {
+                category: {
                     ...state.category,
                     [action.key]: action.value
                 }

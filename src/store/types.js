@@ -11,6 +11,7 @@ export const SET_TOUR = 'SET_TOUR';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const SET_CATEGORY = 'SET_CATEGORY';
 export const SET_CATEGORY_VALUE = 'SET_CATEGORY_VALUE';
+export const SET_CITY_CATEGORIES = 'SET_CITY_CATEGORIES';
 
 // Blog types
 export const SET_BLOGS = 'SET_BLOGS';
