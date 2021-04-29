@@ -15,8 +15,8 @@ import CreateUser from '../pages/new-content/CreateUser';
 const NestedRouter = () => {
     return (
         <>
-            <Route exact path='/tours/create' component={CreateTour} />
             <Route exact path='/tours/edit/id=:id' component={() => <CreateTour fromEdit={true} />} />
+            <Route exact path='/tours/create' component={CreateTour} />
             <Route exact path='/categories/create' component={CreateCategory} />
             <Route exact path='/users/create' component={CreateUser} />
             <Route exact path='/blog/edit/id=:id' component={() => <CreateBlog fromEdit={true} />} />

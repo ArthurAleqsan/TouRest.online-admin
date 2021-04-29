@@ -10,8 +10,9 @@ import { CONFIG } from '../../../util/config';
 import { getManagers } from '../../../store/user/user.actions';
 import { getCategories } from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
-import { createTour } from '../../../store/tours/tour.actions';
+import { createTour, editTour, getTourById } from '../../../store/tours/tour.actions';
 import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
+import { getParam, isValidObject } from '../../../util/helpers';
 
 const { Option } = Select;
 const { tour_schema, cities } = CONFIG;
@@ -19,7 +20,7 @@ const LANGUAGES = ["Русский", "English"].map(language => <Option key={lan
 const CITIES = cities.map(city => <Option key={city}>{city}</Option>);
 
 const CreateTour = () => {
-
+    const [editableId, setEditableId] = useState('');
     const props = {
         name: 'file',
         action: '/v1/media/upload',
@@ -44,6 +45,11 @@ const CreateTour = () => {
     useEffect(() => {
         getManagers(dispatch);
         getCategories(dispatch)
+        if (location.pathname.includes('edit')) {
+            const id = getParam(location.pathname, 'id=', 1);
+            getTourById(dispatch, id);
+            setEditableId(id);
+        }
     }, [])
     const USERS = managers && managers.map(user => <Option key={user.id}>{user.firstName} {user.lastName}</Option>);
     const CATEGORIES = categories && categories.map(category => <Option key={category.id}>{category.en_name}</Option>);
@@ -51,8 +57,11 @@ const CreateTour = () => {
     const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
     const [tourValues, setTourValues] = useState(tour_schema);
     const handleCreate = () => {
-        console.log(tourValues);
-        createTour(dispatch, getState, tourValues);
+        if (isValidObject(tourValues)) {
+            editableId ? editTour(dispatch, getState, editableId, tourValues) : createTour(dispatch, getState, tourValues);
+        } else {
+            message.error('Please fill all required filds')
+        }
 
     }
     const handleSelectWeekDate = weekdays => {
@@ -102,7 +111,7 @@ const CreateTour = () => {
     }
     const onSelectDates = (dates) => {
         const _dates = dates.map(d => new Date(d));
-        console.log(_dates);
+        console.lo(_dates);
         // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
     }
 
@@ -234,11 +243,11 @@ const CreateTour = () => {
                     <span className='label'>Starting time</span>
                     <TimePicker onChange={(t, tStr) => onHandleTimeSelect(t, tStr, 'start-time')} />
                 </div>
-                {tourValues.dateType == 'week' && <WeeklyDaysSelector 
-                    onChange = {handleSelectWeekDate}
+                {tourValues.dateType == 'week' && <WeeklyDaysSelector
+                    onChange={handleSelectWeekDate}
                 />}
-                {tourValues.dateType == 'date' && <MultipleDatePicker 
-                    onSubmit = {onSelectDates}
+                {tourValues.dateType == 'date' && <MultipleDatePicker
+                    onSubmit={onSelectDates}
                 />}
 
             </div>

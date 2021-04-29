@@ -5,6 +5,7 @@ export const SET_MANAGERS = 'SET_MANAGERS';
 
 // Tours types
 export const SET_TOURS = 'SET_TOURS';
+export const SET_TOUR = 'SET_TOUR';
 
 // Categories types
 export const SET_CATEGORIES = 'SET_CATEGORIES';

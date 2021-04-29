@@ -47,14 +47,28 @@ export const editTour = (dispatch, getState, data, id) => {
 }
 export const removeTour = (dispatch, getState, id) => {
     ToursService.removeTour(id)
-    .then(res => {
-        if(ToursService.isOkStatus(res.status)) {
-            const { tours } = getState().tours;
-            const _newTours = removeFromArray(tours, t => t.id == id);
-            dispatch({
-                type: types.SET_TOURS,
-                tours: _newTours
-            })
-        }
-    })
+        .then(res => {
+            if (ToursService.isOkStatus(res.status)) {
+                const { tours } = getState().tours;
+                const _newTours = removeFromArray(tours, t => t.id == id);
+                dispatch({
+                    type: types.SET_TOURS,
+                    tours: _newTours
+                })
+            }
+        })
+}
+export const getTourById = (dispatch, id) => {
+    ToursService.getTourById(id)
+        .then(res => {
+            const { status, json: tour } = res;
+            if (ToursService.isOkStatus(status)) {
+                dispatch({
+                    type: types.SET_TOUR,
+                    tour
+                })
+            } else {
+                message.error(tour.message);
+            }
+        })
 }
