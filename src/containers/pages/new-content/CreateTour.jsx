@@ -57,18 +57,13 @@ const CreateTour = () => {
     const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
     const [tourValues, setTourValues] = useState(tour_schema);
     const handleCreate = () => {
-<<<<<<< HEAD
         if (isValidObject(tourValues)) {
             editableId ? editTour(dispatch, getState, editableId, tourValues) : createTour(dispatch, getState, tourValues);
         } else {
             message.error('Please fill all required filds')
         }
-
-=======
-        console.log(tourValues);
         createTour(dispatch, getState, tourValues);
         resetData();
->>>>>>> 5a2e4c2c7d2a54508c219abfaac367c8b1907684
     }
     const handleSelectWeekDate = weekdays => {
         setTourValues({ ...tourValues, weekdays });
