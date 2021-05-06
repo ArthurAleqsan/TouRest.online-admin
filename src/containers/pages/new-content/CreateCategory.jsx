@@ -29,17 +29,19 @@ const CreateCategory = ({ fromEdit }) => {
             getCategoryById(dispatch, id);
             setEditableId(id);
         }
+
     }, []);
     const handleCreate = () => {
         if (isValidObject(category)) {
             editableId ? editCategory(dispatch, getState, editableId, category) : createCategory(dispatch, getState, category);
+            message.success('Caregory created');
         } else {
             message.error('Please fill all required filds');
         }
-    }
+    };
     const resetData = () => {
-        // set(dispatch, 'SET_CATEGORY', category_schema);
-    }
+
+    };
     const handleInputGroupChange = e => {
         const { name, value } = e.target;
         setValue(dispatch, 'SET_CATEGORY_VALUE', [name], value);

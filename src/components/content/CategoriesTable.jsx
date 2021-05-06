@@ -25,6 +25,10 @@ const CategoriesTable = () => {
     return (
         <div className='table-container'>
             <Divider orientation="left" className='page-header'>Categories</Divider>
+            <div className='button' >
+                <Button type='primary' onClick={handleRedirect}>Create category</Button>
+            </div>
+            <Divider />
             {categories && categories.length == 0 ? <Row >
                 <Col className="gutter-row" span={6}>
                     <div>Do not have categories</div>
@@ -75,9 +79,7 @@ const CategoriesTable = () => {
                     />
                 </Row>
             }) : <Spin />}
-            <div className='button' >
-                <Button type='primary' onClick={handleRedirect}>Create category</Button>
-            </div>
+
 
         </div>
     )

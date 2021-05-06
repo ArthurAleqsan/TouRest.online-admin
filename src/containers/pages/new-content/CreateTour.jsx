@@ -13,6 +13,7 @@ import DynamicInput from '../../../components/simple-components/DynamicInput';
 import { createTour, editTour, getTourById } from '../../../store/tours/tour.actions';
 import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
 import { getParam, isValidObject } from '../../../util/helpers';
+import { set } from '../../../store/global/global.actions';
 
 const { Option } = Select;
 const { tour_schema, cities } = CONFIG;
@@ -41,10 +42,11 @@ const CreateTour = () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
     const { managers } = useSelector(s => s.user);
-    const { city_categories: categories} = useSelector(s => s.categories);
+    const { city_categories: categories } = useSelector(s => s.categories);
     useEffect(() => {
         getManagers(dispatch);
-        getCategories(dispatch)
+        getCategories(dispatch);
+        set(dispatch,'SET_TOUR',null);
         if (location.pathname.includes('edit')) {
             const id = getParam(location.pathname, 'id=', 1);
             getTourById(dispatch, id);
@@ -59,6 +61,7 @@ const CreateTour = () => {
     const handleCreate = () => {
         if (isValidObject(tourValues)) {
             editableId ? editTour(dispatch, getState, editableId, tourValues) : createTour(dispatch, getState, tourValues);
+            editableId ? message.success('Tour edited') : message.success('Tour created');
         } else {
             message.error('Please fill all required filds')
         }
