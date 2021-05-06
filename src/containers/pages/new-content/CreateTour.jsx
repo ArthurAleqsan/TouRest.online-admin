@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment'
-import { Button, Select, Divider, Upload, message, TimePicker } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import moment from 'moment-timezone'
+import {Button, Select, Divider, Upload, message, TimePicker} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
+import {useDispatch, useSelector, useStore} from 'react-redux';
 import MultipleDatePicker from 'react-multiple-datepicker'
 
 import InputGroup from '../../../components/simple-components/InputGroup';
-import { CONFIG } from '../../../util/config';
-import { getManagers } from '../../../store/user/user.actions';
-import { getCategories, setCityCategories } from '../../../store/categories/category.actions';
+import {CONFIG} from '../../../util/config';
+import {getManagers} from '../../../store/user/user.actions';
+import {getCategories, setCityCategories} from '../../../store/categories/category.actions';
 import DynamicInput from '../../../components/simple-components/DynamicInput';
-import { createTour, editTour, getTourById } from '../../../store/tours/tour.actions';
+import {createTour, editTour, getTourById} from '../../../store/tours/tour.actions';
 import WeeklyDaysSelector from '../../../components/simple-components/WeeklyDaysSelector';
-import { getParam, isValidObject } from '../../../util/helpers';
+import {getParam, isValidObject} from '../../../util/helpers';
 
-const { Option } = Select;
-const { tour_schema, cities } = CONFIG;
+const {Option} = Select;
+const {tour_schema, cities} = CONFIG;
 const LANGUAGES = ["Русский", "English"].map(language => <Option key={language}>{language}</Option>);
 const CITIES = cities.map(city => <Option key={city}>{city}</Option>);
 
@@ -32,95 +32,100 @@ const CreateTour = () => {
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`);
                 console.log(info.file.response[0]);
-                setTourValues({ ...tourValues, images: [...tourValues.images, info.file.response[0]] });
+                setTourValues({...tourValues, images: [...tourValues.images, info.file.response[0]]});
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
     };
     const dispatch = useDispatch();
-    const { getState } = useStore();
-    const { managers } = useSelector(s => s.user);
-    const { city_categories: categories} = useSelector(s => s.categories);
+    const {getState} = useStore();
+    const {managers} = useSelector(s => s.user);
+    const {tours} = useSelector(s => s.tours);
+    const {city_categories: categories} = useSelector(s => s.categories);
     useEffect(() => {
-        getManagers(dispatch);
+        !managers && getManagers(dispatch);
         getCategories(dispatch)
         if (location.pathname.includes('edit')) {
             const id = getParam(location.pathname, 'id=', 1);
             getTourById(dispatch, id);
             setEditableId(id);
+            const currentTour = tours.find(tour => tour.id === id)
+            setTourValues(currentTour);
+            console.log('currentTour', currentTour);
         }
     }, [])
     const USERS = managers && managers.map(user => <Option key={user.id}>{user.firstName} {user.lastName}</Option>);
     const CATEGORIES = categories && categories.map(category => <Option key={category.id}>{category.en_name}</Option>);
-    const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
+    // const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
     const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
     const [tourValues, setTourValues] = useState(tour_schema);
-    const handleCreate = () => {
-<<<<<<< HEAD
+    const handleEditOrCreate = () => {
+
         if (isValidObject(tourValues)) {
+            delete tourValues.category;
+            delete tourValues.manager;
             editableId ? editTour(dispatch, getState, editableId, tourValues) : createTour(dispatch, getState, tourValues);
+            resetData();
         } else {
             message.error('Please fill all required filds')
         }
 
-=======
-        console.log(tourValues);
-        createTour(dispatch, getState, tourValues);
-        resetData();
->>>>>>> 5a2e4c2c7d2a54508c219abfaac367c8b1907684
     }
     const handleSelectWeekDate = weekdays => {
-        setTourValues({ ...tourValues, weekdays });
+        setTourValues({...tourValues, weekdays});
     }
     const resetData = () => {
         setTourValues(tour_schema);
     }
     const handleInputGroupChange = e => {
-        const { name, value } = e.target
-        setTourValues({ ...tourValues, [name]: value });
+        const {name, value} = e.target
+        setTourValues({...tourValues, [name]: value});
     }
     // TO DO
     // all selects replace to one
     const handleLanguageSelect = (languages) => {
-        setTourValues({ ...tourValues, languages });
+        setTourValues({...tourValues, languages});
     }
     const handleSelect = (city) => {
-        setTourValues({ ...tourValues, city });
+        setTourValues({...tourValues, city});
         setCityCategories(dispatch, getState, city);
     }
     const handleSelectUser = (managerId) => {
-        setTourValues({ ...tourValues, managerId });
+        const manager = managers.find(manager => manager.id === managerId);
+        setTourValues({...tourValues, managerId, manager});
     }
     const handleSelectCategory = (categoryId) => {
-        setTourValues({ ...tourValues, categoryId });
+        const category = categories.find(category => category.id === categoryId);
+        setTourValues({...tourValues, categoryId, category});
     }
-    const handleSelectRate = (rate) => {
-        setTourValues({ ...tourValues, rate });
-    }
+    // const handleSelectRate = (rate) => {
+    //     setTourValues({ ...tourValues, rate });
+    // }
 
     const handleSelectDatetype = (dateType) => {
-        setTourValues({ ...tourValues, dateType });
+        setTourValues({...tourValues, dateType});
     }
 
-    const onHandleTimeSelect = (value, tymeString, type) => {
-        if (type == 'duration') {
+    const onHandleTimeSelect = (value, timeString, type) => {
+        console.log('times', value, timeString, type);
+        if (type === 'duration') {
             const duration = value.valueOf() - moment().startOf('day').valueOf()
-            setTourValues({ ...tourValues, duration });
-        } else if (type == 'start-time') {
-            console.log(tymeString)
-            setTourValues({ ...tourValues, startTime: tymeString });
+            setTourValues({...tourValues, duration});
+        } else if (type === 'start-time') {
+            console.log(timeString)
+            setTourValues({...tourValues, startTime: timeString});
         }
 
     }
     const handleDynamicInputChange = (key, val) => {
-        setTourValues({ ...tourValues, [key]: val });
+        setTourValues({...tourValues, [key]: val});
     }
     const onSelectDates = (dates) => {
         const _dates = dates.map(d => new Date(d));
         console.lo(_dates);
         // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
-        setTourValues({ ...tourValues, availableDates: _dates })
+        setTourValues({...tourValues, availableDates: _dates})
     }
 
     return (
@@ -128,8 +133,9 @@ const CreateTour = () => {
             <div className='input-group'>
                 <span className='label'>City</span>
                 <Select
-                    style={{ width: '100%' }}
+                    style={{width: '100%'}}
                     placeholder="Please select tour city"
+                    value={tourValues.city || null}
                     onChange={handleSelect}
                 >
                     {CITIES}
@@ -138,8 +144,9 @@ const CreateTour = () => {
             <div className='input-group'>
                 <span className='label'>Manager</span>
                 <Select
-                    style={{ width: '100%' }}
+                    style={{width: '100%'}}
                     placeholder="Please select manager"
+                    value={(tourValues && `${tourValues.manager.firstName} ${tourValues.manager.lastName}`) || null}
                     onChange={handleSelectUser}
                 >
                     {USERS}
@@ -148,9 +155,10 @@ const CreateTour = () => {
             <div className='input-group'>
                 <span className='label'>Category</span>
                 <Select
-                    style={{ width: '100%' }}
+                    style={{width: '100%'}}
                     placeholder="Please select category"
                     onChange={handleSelectCategory}
+                    value={(tourValues && tourValues.category.en_name) || null}
                 >
                     {CATEGORIES}
                 </Select>
@@ -212,8 +220,9 @@ const CreateTour = () => {
                 <Select
                     mode="multiple"
                     allowClear
-                    style={{ width: '100%' }}
+                    style={{width: '100%'}}
                     placeholder="Please select tour languages"
+                    value={tourValues.languages}
                     onChange={handleLanguageSelect}
                 >
                     {LANGUAGES}
@@ -232,7 +241,7 @@ const CreateTour = () => {
             <div className='input-group'>
                 <span className='label'>Date type</span>
                 <Select
-                    style={{ width: '100%' }}
+                    style={{width: '100%'}}
                     placeholder="Please select rate"
                     onChange={handleSelectDatetype}
                     defaultValue='everyday'
@@ -244,17 +253,21 @@ const CreateTour = () => {
                 <div className='input-group'>
                     <span className='label'>Duration</span>
                     <TimePicker
+                        value={tourValues && moment.tz(tourValues.duration, "Etc/GMT")}
                         onChange={(t, tStr,) => onHandleTimeSelect(t, tStr, 'duration')}
                     />
                 </div>
                 <div className='input-group'>
                     <span className='label'>Starting time</span>
-                    <TimePicker onChange={(t, tStr) => onHandleTimeSelect(t, tStr, 'start-time')} />
+                    {/*value={moment.tz(tourValues.startTime, "Etc/GMT")}*/}
+                    <TimePicker
+                        onChange={(t, tStr) => onHandleTimeSelect(t, tStr, 'start-time')}
+                    />
                 </div>
-                {tourValues.dateType == 'week' && <WeeklyDaysSelector
+                {tourValues.dateType === 'week' && <WeeklyDaysSelector
                     onChange={handleSelectWeekDate}
                 />}
-                {tourValues.dateType == 'date' && <MultipleDatePicker
+                {tourValues.dateType === 'date' && <MultipleDatePicker
                     onSubmit={onSelectDates}
                 />}
 
@@ -262,53 +275,76 @@ const CreateTour = () => {
             <DynamicInput
                 name='en_highlights'
                 label='Highlights'
+                initialValues={tourValues.en_highlights}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='ru_highlights'
                 label='описание'
+                initialValues={tourValues.ru_highlights}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='en_includes'
                 label='Includes'
+                initialValues={tourValues.en_includes}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='ru_includes'
                 label='Что входит в тур'
+                initialValues={tourValues.ru_includes}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='en_notSuitable'
                 label='Not suitable'
+                initialValues={tourValues.en_notSuitable}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='ru_notSuitable'
                 label='Что нельзя'
+                initialValues={tourValues.ru_notSuitable}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='en_needed'
                 label='Needed'
+                initialValues={tourValues.en_needed}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
             <DynamicInput
                 name='ru_needed'
                 label='Что нужно'
+                initialValues={tourValues.ru_needed}
                 handleDynamicInputChange={handleDynamicInputChange}
             />
+            {
+                editableId &&
+                <div>
+                    {
+                        tourValues.images.map(image => (<img key={image} src={image} alt="ToutImage"/>))
+                    }
+                </div>    
+            }
             <div className='picture-upload'>
                 <div className='label'>Upload</div>
-                <Upload {...props} listType='picture-card'>
-                    <PlusOutlined />
+                <Upload {...props} listType='picture-card' fileList={tourValues.images.map((image, index) => 
+                    ({
+                        uid: index,
+                        name: index,
+                        status: 'done',
+                        url: image,
+                    }),
+                )}>
+                    <PlusOutlined/>
                 </Upload>
             </div>
-            <Divider />
+            <Divider/>
             <div className='buttons-container'>
-                <Button onClick={resetData} className='reset' >Reset</Button>
-                <Button type="primary" onClick={handleCreate} className='submit' >Submit</Button>
+                <Button onClick={resetData} className='reset'>Reset</Button>
+                <Button type="primary" onClick={handleEditOrCreate} className='submit'>Submit</Button>
             </div>
         </div>
     )

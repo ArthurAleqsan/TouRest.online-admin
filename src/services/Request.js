@@ -21,13 +21,64 @@ export default class ServerConnector {
     }
 
     send(req, errHandler) {
-        const path = `${this.path}${req.path}`;
+        const path = `${this.path + req.path}`;
         return ServerConnector._makeRequest(req, path, errHandler).then((res) => {
             return res;
         })
     }
+    
+    GET(path,  params = {}) {
+        const queryString = ServerConnector.makeQuery(params);
+        const options = {
+            method: 'GET'
+        };
+        return this.send({
+            path: `${path + queryString}`, options
+        }).then(({ json, status }) => ({ json, status }));
+        
+    }
 
-    static _makeRequest(req, path, errHandler) {
+    postLogin(path, data, headers = []) {
+        return this.send({
+            path,
+            options: {
+                method: 'POST',
+                body: data,
+            },
+            headers
+        }, null);
+    }
+    
+    POST(path, data) {
+        return this.send({
+            path,
+            options: {
+                method: 'POST',
+                body: JSON.stringify(data),
+            }
+        }, null);
+    }
+    
+    PUT(path, data) {
+        return this.send({
+            path,
+            options: {
+                method: 'PUT',
+                body: JSON.stringify(data)
+            }
+        }, null);
+    }
+    
+    DELETE(path, id) {
+        return this.send({
+            path: `${path + id}`,
+            options: {
+                method: 'DELETE'
+            }
+        }, null);
+    }
+
+    static _makeRequest(req, path, errHandler = null) {
         return ServerConnector.fetcher(req, path, errHandler)
             .then((res) => ServerConnector._handleErrors(res))
             .then((res) => {
@@ -38,7 +89,7 @@ export default class ServerConnector {
             )
             .catch(error => {
                 if (errHandler) {
-
+                    console.log('errHandler', errHandler);
                 }
                 return { status: error.message, json: {} }
             });

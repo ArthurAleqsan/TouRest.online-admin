@@ -21,7 +21,7 @@ const ToursTable = () => {
     return (
         <div className='table-container'>
             <Divider orientation="left" className='page-header'>Tours</Divider>
-            {tours && tours.length == 0 && <Row>
+            {tours && tours.length === 0 && <Row>
                 <Col className="gutter-row" span={6}>
                     <div>Do not have tours</div>
                 </Col>
