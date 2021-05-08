@@ -28,7 +28,8 @@ const ToursTable = () => {
                 <Button type='primary' onClick={handleRedirect}>Create Tour</Button>
             </div>
             <Divider />
-            {tours && tours.length == 0 && <Row>
+            
+            {tours && tours.length === 0 && <Row>
                 <Col className="gutter-row" span={6}>
                     <div>Do not have tours</div>
                 </Col>
@@ -67,9 +68,7 @@ const ToursTable = () => {
                     />
                 </Row>
             }) : <Spin />}
-
-        </div>
-    )
+    </div>)
 };
 
 ToursTable.propTypes = {

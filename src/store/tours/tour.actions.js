@@ -23,10 +23,13 @@ export const createTour = (dispatch, getState, data) => {
             const { status, json } = res;
             if (ToursService.isOkStatus(status)) {
                 const { tours } = getState().tours;
+                location.reload();
                 dispatch({
                     type: types.SET_TOURS,
                     tours: tours ? [json, ...tours] : [json]
                 })
+            } else {
+                message.error(res.json.message)
             }
         })
 }
@@ -45,6 +48,7 @@ export const editTour = (dispatch, getState, data, id) => {
             }
         })
 }
+
 export const removeTour = (dispatch, getState, id) => {
     ToursService.removeTour(id)
         .then(res => {

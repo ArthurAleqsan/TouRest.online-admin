@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import InputGroup from './InputGroup';
 
 
-const DynamicInput = ({ label, name, handleDynamicInputChange }) => {
+const DynamicInput = ({ label, name, handleDynamicInputChange, initialValues = []}) => {
     const [fields, setFields] = useState([{ value: '' }]);
+    useEffect(() => {
+        initialValues.length && setFields(initialValues.map(value => ({value})))
+    }, [initialValues])
     const handleChange = (i, e) => {
         const elem = { value: e.target.value };
         const newArray = [...fields];
@@ -49,6 +52,7 @@ const DynamicInput = ({ label, name, handleDynamicInputChange }) => {
 DynamicInput.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    initialValues: PropTypes.arrayOf(PropTypes.string),
     handleDynamicInputChange: PropTypes.func.isRequired,
 };
 

@@ -6,20 +6,14 @@ class AuthService extends Request {
         super('/oauth2');
     }
 
-    login({ username, password, }, errorHandler) {
-
-        const options = {
-            method: 'POST',
-            body: `grant_type=password&username=${username}&password=${password}`
-        };
-        return this.send({
-            path: '/token',
-            options,
-            headers: {
+    login({ username, password }) {
+        return this.postLogin(
+            `/token`,
+            `grant_type=password&username=${username}&password=${password}`,
+            {
                 "authorization": `Basic NXJxaDFkcXZrN3JmdDdpYjZlaDBhbHY1bXUydjRmOkpKdW00NldvV2NNeW5vVTFDV2xraEw=`,
                 "content-type": 'application/x-www-form-urlencoded',
-            },
-        }, errorHandler);
+            })
     }
 }
 
