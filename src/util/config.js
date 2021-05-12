@@ -45,6 +45,6 @@ export const CONFIG = {
     //     ru_description: '',
     //     urls: "",
     // },
-    cities : ['Sharm El Sheikh', 'Hurghada', 'Aswan'],
+    cities : ['Sharm El Sheikh', 'Hurghada', 'Aswan','Luxor'],
     roles : ['manager', 'member'],
 };
