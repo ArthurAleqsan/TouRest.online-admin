@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment-timezone';
-import { Button, Select, Divider, Upload, message, TimePicker } from 'antd';
+import {Button, Select, Divider, Upload, message, TimePicker, Spin} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import MultipleDatePicker from 'react-multiple-datepicker'
@@ -32,7 +32,6 @@ const CreateTour = () => {
         onChange(info) {
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`);
-                console.log(info.file.response[0]);
                 setTourValues({ ...tourValues, images: [...tourValues.images, info.file.response[0]] });
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
@@ -42,7 +41,8 @@ const CreateTour = () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
     const { managers } = useSelector(s => s.user);
-    const { tours } = useSelector(s => s.tours);
+    const { tour } = useSelector(s => s.tours);
+    const [tourValues, setTourValues] = useState(tour_schema);
     const { city_categories: categories } = useSelector(s => s.categories);
     useEffect(() => {
         !managers && getManagers(dispatch);
@@ -51,23 +51,26 @@ const CreateTour = () => {
             const id = getParam(location.pathname, 'id=', 1);
             getTourById(dispatch, id);
             setEditableId(id);
-            const currentTour = tours.find(tour => tour.id === id)
-            setTourValues(currentTour);
-            console.log('currentTour', currentTour);
         }
-    }, [])
+    }, []);
+    const [isLoading, setIsLoading] = useState(true);
+    if(tour && isLoading) {
+        setIsLoading(false);
+        setTourValues(tour);
+    }
     const USERS = managers && managers.map(user => <Option key={user.id}>{user.firstName} {user.lastName}</Option>);
     const CATEGORIES = categories && categories.map(category => <Option key={category.id}>{category.en_name}</Option>);
     // const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
     const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
-    const [tourValues, setTourValues] = useState(tour_schema);
 
     const handleEditOrCreate = () => {
-
+        delete tourValues.rate;
+        delete tourValues.id;
+     //   console.log(tourValues);
         if (isValidObject(tourValues)) {
             delete tourValues.category;
             delete tourValues.manager;
-            editableId ? editTour(dispatch, getState, editableId, tourValues) : createTour(dispatch, getState, tourValues);
+            editableId ? editTour(dispatch, getState, tourValues, editableId) : createTour(dispatch, getState, tourValues);
             editableId ? message.success('Tour edited') : message.success('Tour created');
         } else {
             message.error('Please fill all required filds')
@@ -100,21 +103,19 @@ const CreateTour = () => {
         const category = categories.find(category => category.id === categoryId);
         setTourValues({ ...tourValues, categoryId, category });
     }
-    // const handleSelectRate = (rate) => {
-    //     setTourValues({ ...tourValues, rate });
-    // }
+   /* const handleSelectRate = (rate) => {
+        setTourValues({ ...tourValues, rate });
+    }*/
 
     const handleSelectDatetype = (dateType) => {
         setTourValues({ ...tourValues, dateType });
     }
 
     const onHandleTimeSelect = (value, timeString, type) => {
-        console.log('times', value, timeString, type);
         if (type === 'duration') {
             const duration = value.valueOf() - moment().startOf('day').valueOf()
             setTourValues({ ...tourValues, duration });
         } else if (type === 'start-time') {
-            console.log(timeString)
             setTourValues({ ...tourValues, startTime: timeString });
         }
 
@@ -124,19 +125,18 @@ const CreateTour = () => {
     }
     const onSelectDates = (dates) => {
         const _dates = dates.map(d => new Date(d));
-        console.lo(_dates);
         // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
         setTourValues({ ...tourValues, availableDates: _dates })
     }
 
     return (
-        <div className='create-tour'>
+        tourValues ? <div className='create-tour'>
             <div className='input-group'>
                 <span className='label'>City</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select tour city"
-                    value={tourValues.city || null}
+                    value={tourValues?.city || null}
                     onChange={handleSelect}
                 >
                     {CITIES}
@@ -147,7 +147,7 @@ const CreateTour = () => {
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select manager"
-                    value={(tourValues && `${tourValues.manager.firstName} ${tourValues.manager.lastName}`) || null}
+                    value={(tourValues && `${tour?.manager?.firstName} ${tour?.manager?.lastName}`) || null}
                     onChange={handleSelectUser}
                 >
                     {USERS}
@@ -159,60 +159,60 @@ const CreateTour = () => {
                     style={{ width: '100%' }}
                     placeholder="Please select category"
                     onChange={handleSelectCategory}
-                    value={(tourValues && tourValues.category.en_name) || null}
+                    value={(tourValues && tour?.category?.en_name) || null}
                 >
                     {CATEGORIES}
                 </Select>
             </div>
             <InputGroup
                 label='Tour name'
-                value={tourValues.en_name}
+                value={tourValues?.en_name}
                 name='en_name'
                 handleChange={handleInputGroupChange}
             />
             <InputGroup
                 label='Названия тура'
-                value={tourValues.ru_name}
+                value={tourValues?.ru_name}
                 name='ru_name'
                 handleChange={handleInputGroupChange}
             />
             <InputGroup
                 label='Short description'
-                value={tourValues.en_shortDescription}
+                value={tourValues?.en_shortDescription}
                 name='en_shortDescription'
                 handleChange={handleInputGroupChange}
                 textArea
             />
             <InputGroup
                 label='Краткое описание'
-                value={tourValues.ru_shortDescription}
+                value={tourValues?.ru_shortDescription}
                 name='ru_shortDescription'
                 handleChange={handleInputGroupChange}
                 textArea
             />
             <InputGroup
                 label='Full Description'
-                value={tourValues.en_fullDescription}
+                value={tourValues?.en_fullDescription}
                 name='en_fullDescription'
                 handleChange={handleInputGroupChange}
                 textArea
             />
             <InputGroup
                 label='Полное описание'
-                value={tourValues.ru_fullDescription}
+                value={tourValues?.ru_fullDescription}
                 name='ru_fullDescription'
                 handleChange={handleInputGroupChange}
                 textArea
             />
             <InputGroup
                 label='Price for Adults'
-                value={tourValues.priceForAdults}
+                value={tourValues?.priceForAdults}
                 name='priceForAdults'
                 handleChange={handleInputGroupChange}
             />
             <InputGroup
                 label='Price for Children'
-                value={tourValues.priceForChildren}
+                value={tourValues?.priceForChildren}
                 name='priceForChildren'
                 handleChange={handleInputGroupChange}
             />
@@ -229,7 +229,7 @@ const CreateTour = () => {
                     {LANGUAGES}
                 </Select>
             </div>
-            {/* <div className='input-group'>
+           {/*  <div className='input-group'>
                 <span className='label'>Rate</span>
                 <Select
                     style={{ width: '100%' }}
@@ -252,10 +252,11 @@ const CreateTour = () => {
             </div>
             <div className='date-container'>
                 <div className='input-group'>
-                    <span className='label'>Duration</span>
-                    <TimePicker
-                        value={tourValues && moment.tz(tourValues.duration, "Etc/GMT")}
-                        onChange={(t, tStr,) => onHandleTimeSelect(t, tStr, 'duration')}
+                    <InputGroup
+                        label='Duration'
+                        value={tourValues?.duration}
+                        name='duration'
+                        handleChange={handleInputGroupChange}
                     />
                 </div>
                 <div className='input-group'>
@@ -348,7 +349,7 @@ const CreateTour = () => {
                 <Button onClick={resetData} className='reset'>Reset</Button>
                 <Button type="primary" onClick={handleEditOrCreate} className='submit'>Submit</Button>
             </div>
-        </div>
+        </div> : <Spin/>
     )
 };
 

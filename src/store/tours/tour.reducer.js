@@ -10,6 +10,11 @@ const toursReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tours: action.tours
+            };
+        case types.SET_TOUR:
+            return {
+                ...state,
+                tour: action.tour
             }
         default:
             return state
