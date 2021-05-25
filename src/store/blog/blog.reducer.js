@@ -4,7 +4,7 @@ const { blog_schema } = CONFIG;
 
 const initialState = {
     blogs: null,
-    blog: { blog_schema }
+    blog: blog_schema
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -18,6 +18,14 @@ const blogReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     blog: action.blog
+                }
+            case types.SET_BLOG_VALUE:
+                return {
+                    ...state,
+                    blog: {
+                        ...state.blog,
+                        [action.key]: action.value
+                    }
                 }
         default:
             return state

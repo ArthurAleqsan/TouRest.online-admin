@@ -22,7 +22,7 @@ const CreateBlog = () => {
     }, []);
     const handleInputGroupChange = e => {
         const { name, value } = e.target
-        setValue(dispatch, 'SET_CATEGORY_VALUE', [name], value);
+        setValue(dispatch, 'SET_BLOG_VALUE', [name], value);
 
     }
     const handleCreate = () => {
@@ -42,7 +42,7 @@ const CreateBlog = () => {
         onChange(info) {
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`);
-                setValue(dispatch, 'SET_CATEGORY_VALUE', 'url', info.file.response[0])
+                setValue(dispatch, 'SET_BLOG_VALUE', 'urls', [...blog.urls, info.file.response[0]])
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }

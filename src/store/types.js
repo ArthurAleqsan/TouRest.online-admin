@@ -16,3 +16,4 @@ export const SET_CITY_CATEGORIES = 'SET_CITY_CATEGORIES';
 // Blog types
 export const SET_BLOGS = 'SET_BLOGS';
 export const SET_BLOG = 'SET_BLOG';
+export const SET_BLOG_VALUE = 'SET_BLOG_VALUE';
