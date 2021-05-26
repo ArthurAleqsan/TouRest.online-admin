@@ -5,6 +5,7 @@ import user from './user/user.reducer';
 import tours from './tours/tour.reducer';
 import categories from './categories/category.reducer';
 import blog from './blog/blog.reducer';
+import orders from './orders/order.reducer'
 
 
 export default combineReducers({
@@ -13,4 +14,5 @@ export default combineReducers({
     tours,
     categories,
     blog,
+    orders
 });

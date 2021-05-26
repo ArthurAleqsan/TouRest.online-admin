@@ -50,8 +50,8 @@ const ToursTable = () => {
                         </div>
                     </Col>
                     <Col span={3}>{tour.en_name}</Col>
-                    <Col span={3}>{tour.manager.firstName} {tour.manager.lastName}</Col>
-                    <Col span={3}>{tour.rate}</Col>
+                    <Col span={3}>{tour?.manager?.firstName} {tour?.manager?.lastName}</Col>
+                    <Col span={3}>{tour.star}</Col>
                     <Col span={3}>{tour.priceForAdults}</Col>
                     <Col span={3}>{tour.priceForChildren}</Col>
                     <Col span={3}>

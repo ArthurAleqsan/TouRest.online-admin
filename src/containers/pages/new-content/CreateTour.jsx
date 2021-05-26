@@ -54,19 +54,19 @@ const CreateTour = () => {
         }
     }, []);
     const [isLoading, setIsLoading] = useState(true);
-    if(tour && isLoading) {
+    if(tour && isLoading && location.pathname.includes('edit')) {
         setIsLoading(false);
         setTourValues(tour);
     }
     const USERS = managers && managers.map(user => <Option key={user.id}>{user.firstName} {user.lastName}</Option>);
     const CATEGORIES = categories && categories.map(category => <Option key={category.id}>{category.en_name}</Option>);
-    // const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
+    const RATES = [1, 2, 3, 4, 5].map(r => <Option key={r}>{r}</Option>);
     const DATE_TYPES = ['week', 'date', 'everyday'].map(d => <Option key={d}>{d}</Option>)
 
     const handleEditOrCreate = () => {
-        delete tourValues.rate;
         delete tourValues.id;
-     //   console.log(tourValues);
+        delete tourValues.rate;
+        console.log(tourValues);
         if (isValidObject(tourValues)) {
             delete tourValues.category;
             delete tourValues.manager;
@@ -103,9 +103,10 @@ const CreateTour = () => {
         const category = categories.find(category => category.id === categoryId);
         setTourValues({ ...tourValues, categoryId, category });
     }
-   /* const handleSelectRate = (rate) => {
-        setTourValues({ ...tourValues, rate });
-    }*/
+    const handleSelectRate = (star) => {
+        star = Number(star);
+        setTourValues({ ...tourValues, star });
+    }
 
     const handleSelectDatetype = (dateType) => {
         setTourValues({ ...tourValues, dateType });
@@ -147,7 +148,8 @@ const CreateTour = () => {
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select manager"
-                    value={(tourValues && `${tour?.manager?.firstName} ${tour?.manager?.lastName}`) || null}
+                    value={(tourValues?.manager ? `${tourValues?.manager?.firstName} ${tourValues?.manager?.lastName}` :
+                        `${tour?.manager?.firstName} ${tour?.manager?.lastName}` ) || null}
                     onChange={handleSelectUser}
                 >
                     {USERS}
@@ -159,7 +161,7 @@ const CreateTour = () => {
                     style={{ width: '100%' }}
                     placeholder="Please select category"
                     onChange={handleSelectCategory}
-                    value={(tourValues && tour?.category?.en_name) || null}
+                    value={(tourValues?.category ? tourValues?.category?.en_name : tour?.category?.en_name) || null}
                 >
                     {CATEGORIES}
                 </Select>
@@ -229,16 +231,17 @@ const CreateTour = () => {
                     {LANGUAGES}
                 </Select>
             </div>
-           {/*  <div className='input-group'>
+             <div className='input-group'>
                 <span className='label'>Rate</span>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select rate"
                     onChange={handleSelectRate}
+                    value={(tourValues && tourValues.star) || 0}
                 >
                     {RATES}
                 </Select>
-            </div> */}
+            </div> 
             <div className='input-group'>
                 <span className='label'>Date type</span>
                 <Select

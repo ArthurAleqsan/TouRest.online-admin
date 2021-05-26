@@ -17,3 +17,7 @@ export const SET_CITY_CATEGORIES = 'SET_CITY_CATEGORIES';
 export const SET_BLOGS = 'SET_BLOGS';
 export const SET_BLOG = 'SET_BLOG';
 export const SET_BLOG_VALUE = 'SET_BLOG_VALUE';
+
+// Orders types
+export const SET_ORDERS = 'SET_ORDERS';
+export const SET_ORDER = 'SET_ORDER'

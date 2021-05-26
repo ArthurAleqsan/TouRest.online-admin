@@ -68,6 +68,14 @@ app.use(
         secure,
     })
 );
+app.use(
+    '/v1/orders',
+    createProxyMiddleware({
+        target: API_URL,
+        changeOrigin: true,
+        secure,
+    })
+);
 
 app.use(async (req, res, next) => {
     res.sendFile(path.join(__dirname + '/public/index.html'));

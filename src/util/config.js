@@ -19,7 +19,7 @@ export const CONFIG = {
         availableDates: [],
         priceForAdults: 0,
         priceForChildren: 0,
-        // rate: 0,
+        star: 0,
         city: '',
         categoryId: '',
         category: {},
