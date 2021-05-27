@@ -25,21 +25,23 @@ const OrdersTable = () => {
                    onCancel={() => setIsModalVisible(false)}>
                 <div className='table-container'>
                     <Row className='table-header'>
-                        <Col span={5}>Image</Col>
+                        <Col span={4}>Image</Col>
                         <Col span={6}>TourName</Col>
-                        <Col span={3}>Type</Col>
+                        <Col span={3}>Adults C.</Col>
+                        <Col span={3}>Childs C.</Col>
                         <Col span={2}>Price</Col>
-                        <Col span={4}>StartDate</Col>
-                        <Col span={4}>EndDate</Col>
+                        <Col span={3}>StartDate</Col>
+                        <Col span={3}>EndDate</Col>
                     </Row>
                     {tickets ? tickets.map(ticket => {
                         return <Row key={ticket.id} className='table-content'>
-                            <Col span={5}><Image height={120} src={ticket?.tour?.images[0]} alt=""/> </Col>
+                            <Col span={4}><Image height={100} src={ticket?.tour?.images[0]} alt=""/> </Col>
                             <Col span={6}>{ticket?.tour?.en_name} </Col>
-                            <Col span={3}>{ticket.type}</Col>
-                            <Col span={2}>{ticket.price}$</Col>
-                            <Col span={4}>{moment(ticket.startDate).format(dateFormat)}</Col>
-                            <Col span={4}>{moment(ticket.endDate).format(dateFormat)}</Col>
+                            <Col span={3}>{ticket.adultsCount}</Col>
+                            <Col span={3}>{ticket.childsCount}</Col>
+                            <Col span={2}>{ticket.totalPrice}$</Col>
+                            <Col span={3}>{moment(ticket.startDate).format(dateFormat)}</Col>
+                            <Col span={3}>{moment(ticket.endDate).format(dateFormat)}</Col>
                         </Row>
                     }) : <Spin />}
                 </div>
