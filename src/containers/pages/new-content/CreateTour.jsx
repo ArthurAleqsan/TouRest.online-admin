@@ -124,6 +124,10 @@ const CreateTour = () => {
     const handleDynamicInputChange = (key, val) => {
         setTourValues({ ...tourValues, [key]: val });
     }
+    const handleDeleteImage = (images, index) => {
+        const data = images.filter((image, key)=> key !== index);
+        setTourValues({...tourValues, images: data })
+    }
     const onSelectDates = (dates) => {
         const _dates = dates.map(d => new Date(d));
         // setTourValues({ ...tourValues, availableDates: [new Date(date).toISOString()] })
@@ -329,7 +333,11 @@ const CreateTour = () => {
                 editableId &&
                 <div className='images-container'>
                     {
-                        tourValues.images.map(image => (<img key={image} src={image} alt="ToutImage" />))
+                        tourValues.images.map((image, index) => (
+                            <span key={index} onClick={() => handleDeleteImage(tourValues.images, index)}>
+                                <img key={image} src={image} alt="ToutImage" />
+                                <span className='delete-icon'>X</span>
+                            </span>))
                     }
                 </div>
             }
