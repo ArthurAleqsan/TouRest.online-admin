@@ -8,7 +8,7 @@ const InputGroup = memo(({ label, value, handleChange, name, textArea, type = 't
     return (
         <div className='input-group'>
             {!fromDynamicInput && <span className='label'>{label}</span>}
-            {textArea ? <TextArea name={name} onChange={handleChange} value={value} style={{ resize: 'none' }} />
+            {textArea ? <TextArea name={name} onChange={handleChange} value={value} style={{ height: '200px' }} />
                 : <Input name={name} onChange={handleChange} value={value} type={type} />}
         </div>
     )

@@ -68,6 +68,11 @@ a {
         .ant-col:not(:last-child) {
             border-right: 1px solid hsla(0, 0%, 43.9%, 0.11);
         }
+        .text-desc {
+            align-items: unset !important;
+            overflow: auto !important;
+            font-size: 12px !important;
+        }
     }
     .btns-container {
         display: flex;
@@ -110,6 +115,9 @@ a {
             }
             .ant-input {
                 width: 300px;
+            }
+            textarea {
+                height: 200px !important;
             }
         }
     }

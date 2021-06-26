@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { getParam } from '../../../util/helpers';
 import InputGroup from '../../../components/simple-components/InputGroup';
@@ -49,10 +50,10 @@ const CreateBlog = () => {
         },
     };
     const resetData = () => {
-       
+
     }
     return (
-        <div>
+        <div className='create-tour '>
             <InputGroup
                 label='Title'
                 name='en_title'
@@ -70,18 +71,22 @@ const CreateBlog = () => {
                 name='en_description'
                 handleChange={handleInputGroupChange}
                 value={blog.en_description}
-                textarea
+                textArea
             />
             <InputGroup
                 label='Описание'
                 name='ru_description'
                 handleChange={handleInputGroupChange}
                 value={blog.ru_description}
-                textarea
+                textArea
             />
-            <Upload {...props}>
-                Upload
-            </Upload>
+            <div className='picture-upload'>
+                <div className='label'>Upload</div>
+                <Upload {...props} listType='picture-card'>
+                    <PlusOutlined />
+
+                </Upload>
+            </div>
             <div className='buttons-container'>
                 <Button onClick={resetData} >Reset</Button>
                 <Button type="primary" onClick={handleCreate} >Submit</Button>

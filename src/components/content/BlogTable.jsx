@@ -56,8 +56,8 @@ const BlogTable = () => {
                     </Col>
                     <Col span={3}>{blog.en_title}</Col>
                     <Col span={3}>{blog.ru_title}</Col>
-                    <Col span={5}>{blog.en_description}</Col>
-                    <Col span={5}>{blog.ru_description}</Col>
+                    <Col span={5} className='text-desc'>{blog.en_description}</Col>
+                    <Col span={5} className='text-desc'>{blog.ru_description}</Col>
                     <Col span={3}>
                         <div className='btns-container'>
                             <Button type='primary' className='button' onClick={() => handleRedirectToEdit(blog.id)}>Edit</Button>
